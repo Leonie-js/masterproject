@@ -14,10 +14,13 @@
 	<title>Learn Javascript in Dutch!</title>
 </head>
 <body>
-	<h1>home</h1>
+	<?php
+		$userID = $_GET["userID"];
+		$language = $_GET["language"];
+	?> 
+	<h1>home (<?php echo $language; ?>)</h1>
 	<p > UserID 
 		<?php
-			$userID = $_GET["userID"];
 			echo $userID;
 		?> 
 		is logged in </p>
@@ -45,7 +48,7 @@
                 	$finishedtext = 'true';
                 }
 
-		        echo "<tr><td>".$moduleID."</td><td><a href='/module-".$moduleID."?userID=".$userID."'>Module ".$moduleID."</a></td><td>".$noa."</td><td>".$finishedtext ."</td></tr>";
+		        echo "<tr><td>".$moduleID."</td><td><a href='/module-".$moduleID."?userID=".$userID."&language=".$language."'>Module ".$moduleID."</a></td><td>".$noa."</td><td>".$finishedtext ."</td></tr>";
 		    }
 		    echo "</table>";
 		?>

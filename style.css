@@ -21,10 +21,36 @@ body{
 	display: block;
 }
 
-code{
-	background-color: #d3d3d3;
+code, pre{
+	background-color: #827c7c;
 	padding: 10px;
-	margin-left: 10px;
+	margin: 0 0 0 10px;
+	color: white;
+}
+pre{
+	width: 200px;
+}
+.keyword{
+	color: aqua;
+}
+.string {
+	color: gold;
+}
+.number{
+	color: orchid;
+}
+.array{
+	color: sienna;
+}
+.operator{
+	color: #E91E63;
+}
+.comment{
+	color: lightgrey;
+}
+
+input{
+	margin: 10px;
 }
 
 #box{
@@ -47,4 +73,23 @@ code{
 textarea{
 	width: 80%;
 	height: 400px;
+}
+
+table{
+	border-collapse: collapse;
+	margin:0;
+	padding:0;
+}
+th{
+	background-color: #dbddff;
+	padding: 10px;
+	border: 2px solid white;
+}
+td{
+	padding: 10px;
+	background-color: #f5f5ff;
+	border: 2px solid white;
+}
+td code{
+	display: inline-block;
 }

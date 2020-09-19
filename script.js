@@ -108,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function(){
 	}	
 }, false);
 
-
 function sendlogin(){
 	
 	var userID = document.getElementsByName("userID")[0].value;
@@ -128,9 +127,10 @@ function sendlogin(){
 		xmlHttp.onreadystatechange = function(){
 
 			if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
-				if (xmlHttp.responseText == "true"){
-					window.location.href = "/home?userID=" + userID;
-				}else {
+				if (xmlHttp.responseText != "false"){
+					var language = JSON.parse(xmlHttp.responseText)['language'];
+					window.location.href = "/home?userID=" + userID + "&language=" + language;
+				} else {
 					alert("Your account details are not recognized.")
 					console.log(xmlHttp.responseText);
 				}

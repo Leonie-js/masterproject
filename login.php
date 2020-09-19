@@ -15,12 +15,14 @@ if ($conn->connect_error) {
 $username = $_POST["userID"];
 $password = $_POST["password"];
 
-$sql = "SELECT userID, password FROM users WHERE userID = '". $username ."' AND  password = '" . $password ."'";
+$sql = "SELECT language FROM users WHERE userID = '". $username ."' AND  password = '" . $password ."'";
 
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo 'true';
+
+    echo json_encode($result->fetch_assoc());
+
 } else {
 	echo 'false';
 }
