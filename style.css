@@ -22,13 +22,11 @@ body{
 }
 
 code, pre{
-	background-color: #827c7c;
+	background-color: #353535;
 	padding: 10px;
 	margin: 0 0 0 10px;
 	color: white;
-}
-pre{
-	width: 200px;
+	width: min-content;
 }
 .keyword{
 	color: aqua;
@@ -39,14 +37,29 @@ pre{
 .number{
 	color: orchid;
 }
-.array{
-	color: sienna;
+.arguments{
+	color: orange;
 }
 .operator{
-	color: #E91E63;
+	color: magenta;
 }
 .comment{
 	color: lightgrey;
+}
+.function{
+	color: lime;
+}
+
+.images{
+	text-align: center;
+}
+
+.images img{
+	width: 150px;
+}
+
+.images p{
+	margin-top: 0px;
 }
 
 input{

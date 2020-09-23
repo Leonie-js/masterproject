@@ -18,6 +18,54 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 	}
 
+	var exercises = document.getElementsByClassName('exercise');
+
+	if (exercises){
+
+		for (var i =  0; i < exercises.length; i++) {
+			var exercise = exercises[i];
+			var parent = exercise.parentElement.querySelector('code');
+			var children = parent.childNodes.length;
+			var childrenInput = 1;
+			var exerciseid = exercise.id;
+			var inputid = exerciseid.substring(exerciseid.length-3, exerciseid.length);
+
+
+			for (var a = 0; a < children; a++) {
+				if(parent.childNodes[a].nodeName == 'INPUT'){
+		            childrenInput++;
+		        }	
+			}
+
+			console.log(inputid);
+			console.log(exercise);
+			
+			exercise.addEventListener('click', event => {
+				console.log(inputid);
+				console.log(exercise);
+				event.preventDefault();
+
+				for (var j = 1; j < childrenInput; j++) {
+					console.log('this is input:'+ inputid + j);
+					var input = document.getElementById(inputid + '-' + j);
+					var correctAnswer = input.dataset.answer;
+					var givenAnswer = input.value;
+					var errorLabel = document.createElement('label')
+					if (givenAnswer == correctAnswer){
+						var errorText = document.createTextNode("this is correct.");
+						errorLabel.appendChild(errorText);
+						input.after(errorLabel);
+					} else {
+						var errorText = document.createTextNode('this is incorrect');
+						errorLabel.appendChild(errorText);
+						input.after(errorLabel);
+					}
+				}
+			}, false);
+		}
+		
+	}
+
 	var modulestart = document.getElementById("module");
 
 	if (modulestart){
@@ -159,8 +207,6 @@ function getJStext(done){
 			.split('\n')
 			.map(function(x) { return x.split(';') })
 			.reduce(function(acc, pair) { acc[pair[0]] = pair[1]; return acc }, {});
-
-			console.log(dict);
 
 			resolve(dict);
 	};
