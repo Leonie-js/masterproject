@@ -13,7 +13,7 @@
 	<script src="script.js"></script>
 	<title>Learn Javascript in Dutch!</title>
 </head>
-<body id="module">
+<body >
 	<h1> Module 1 </h1>
 	<?php 
 		$language = $_GET["language"];
@@ -44,9 +44,9 @@
 		<h3> Exercise: </h3>
 		<p> Create a variable called 'carName' and assign the value Volvo to it.</p>
 
-		<code class="ex1"><span class="keyword">var</span> <input id="ex1name" type="text"> <span class="operator">=</span> <span class="string">"</span><input id="ex1value" type="text"><span class="string">"</span>;</code>
+		<code><span class="keyword">var</span> <input id="1-1-1" type="text" data-answer="carName"> <span class="operator">=</span> <span class="string">"</span><input id="1-1-2" type="text" data-answer="Volvo"><span class="string">"</span>;</code>
 
-		<input id="checkex1" type="submit" value="Check Code"/>
+		<input class="exercise" id="excercise1-1" type="submit" value="Check Code"/>
 
 		<!-- <div id="box"><p>id="box"</p></div> -->
 	</div>

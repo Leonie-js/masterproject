@@ -13,7 +13,7 @@
 	<script src="script.js"></script>
 	<title>Learn Javascript in Dutch!</title>
 </head>
-<body id="module">
+<body>
 	<h1> Module 2 </h1>
 	<?php 
 		$language = $_GET["language"];
@@ -40,19 +40,20 @@
 		<p> Fix the if statement to alert "Hello World" if x is greater than y, otherwise alert "Goodbye".</p>
 
 		<pre style="width: 500px;" ><code style="padding:initial;">
-<input id="ex2if" type="text">(x <input id="ex2condition" type="text"> y){
+<input id="2-1-1" type="text" data-answer="if">(x <input id="2-1-2" type="text" data-answer=">"> y){
 	<span class="keyword">document</span>.<span class="keyword">write</span>(<span class="string">'Hello World'</span>);
-} <input id="ex2else" type="text"> {
+} <input id="2-1-3" type="text" data-answer="else"> {
 	<span class="keyword">document</span>.<span class="keyword">write</span>(<span class="string">'Goodbye'</span>);
 }</span></code></pre><br/> 
 
-		<input id="checkex2" type="submit" value="Check Code"/>
+		<input class="exercise" id="exercise2-1" type="submit" value="Check Code"/>
 
+		<h3>Switch</h3>
 		<p> The switch statement is used to perform different actions based on different conditions. This is widely used when you have a lot of different values that needs to be checked with the variable. <br/>
 		For example the getDay() method returns the weekday as a number between 0 and 6. <br/>
 		(Sunday=0, Monday=1, Tuesday=2 ..) <br/>
 		This example uses the weekday number to calculate the weekday name:</p>
-		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">switch</span> (<span class="keyword">new</span> Date().getDay()) {
+		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">switch</span> (<span class="operator">new</span> <span class="keyword">Date</span>().<span class="keyword">getDay</span>()) {
 	<span class="keyword">case</span> <span class="number">0</span>:
 		day <span class="operator">=</span> <span class="string">'Sunday'</span>;
 		<span class="keyword">break</span>;
@@ -121,11 +122,11 @@
 		<h3> Exercise: </h3>
 		<p> Create a loop that runs from 0 to 9.</p>
 
-		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">for</span> (i <span class="operator">= </span> <input id="ex1declare" type="text">; i <span class="operator"> < </span> <input id="ex1codition" type="text">; i<input id="ex1update" type="text">;) {
+		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">for</span> (i <span class="operator">= </span> <input id="2-2-1" type="text" data-answer="0">; i <span class="operator"> < </span> <input id="2-2-2" type="text" data-answer="10">; i<input id="2-2-3" type="text" data-answer="++">;) {
 	text <span class="operator">=</span> <span class="string">'The number is '</span> <span class="operator">+</span> i;
 }</code></pre><br/>
 
-		<input id="checkex1" type="submit" value="Check Code"/>
+		<input class="exercise" id="exercise2-2" type="submit" value="Check Code"/>
 	</div>
 
 
