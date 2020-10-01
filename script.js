@@ -36,23 +36,35 @@ document.addEventListener('DOMContentLoaded', function(){
 		            childrenInput++;
 		        }	
 			}
-
-			console.log(inputid);
-			console.log(exercise);
 			
 			exercise.addEventListener('click', event => {
-				console.log(inputid);
-				console.log(exercise);
+				exercise = event.srcElement;
+				parent = exercise.parentElement.querySelector('code');
+				var labels = parent.getElementsByTagName('label').length;
+				exerciseid = event.srcElement.id;
+				inputid = exerciseid.substring(exerciseid.length-3, exerciseid.length);
 				event.preventDefault();
 
+				console.log(labels);
+				if (labels > 0){
+					var c = labels - 1;
+					for (var b = 0; b < labels; b++) {
+						
+						console.log(parent.getElementsByTagName('label'));
+						console.log(c);
+						parent.getElementsByTagName('label')[c].remove();
+						c --;
+					}	
+				}
+
 				for (var j = 1; j < childrenInput; j++) {
-					console.log('this is input:'+ inputid + j);
 					var input = document.getElementById(inputid + '-' + j);
 					var correctAnswer = input.dataset.answer;
 					var givenAnswer = input.value;
-					var errorLabel = document.createElement('label')
+					var errorLabel = document.createElement('label');
+					
 					if (givenAnswer == correctAnswer){
-						var errorText = document.createTextNode("this is correct.");
+						var errorText = document.createTextNode("this is correct");
 						errorLabel.appendChild(errorText);
 						input.after(errorLabel);
 					} else {
@@ -61,65 +73,77 @@ document.addEventListener('DOMContentLoaded', function(){
 						input.after(errorLabel);
 					}
 				}
-			}, false);
+			});
 		}
 		
 	}
 
-	var modulestart = document.getElementById("module");
+	var codemirror = document.getElementById("codemirror");
 
-	if (modulestart){
-
-		getJStext()
-			.then(function(result){
-				console.log(result);
-			})
-			.catch(function() {
-				console.log("error occured");
-			});
+	if (codemirror){
 
 		var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
 			mode: "javascript",
 			lineNumbers: true,
 			indentWithTabs: true,
 			gutters: ["CodeMirror-lint-markers"],
-			lint:true
+			lint:true,
+			theme: 'monokai'
 		});
 		editor.save();
 
-		const object = {
-			"vind": "get",
-			"Met" : "By",
-			"inHTML" : "innerHTML"
-		};
+		//loadCode();
 
-		var ex;
-		var excode = '';
+		var endExercise = document.getElementById('codeinput');
+		var excerciseCode = '';
 		var code = '';
-		var translatedcode;
+		var translatedCode;
 
-		$('#ex1').change(function(){
+		// $('#ex1').change(function(){
 
-			ex = $('#ex1').val();
-			excode = '';
+		// 	ex = $('#ex1').val();
+		// 	excode = '';
 
-			excode = 'document.getElementById(\"box\").innerHTML = \"<p>id=\'box\'</p>' + ex + '\";'
-			$('script').remove();
-			$('<script>').html(excode + translatedcode).appendTo('head');
-		})
+		// 	excode = 'document.getElementById(\"box\").innerHTML = \"<p>id=\'box\'</p>' + ex + '\";'
+		// 	$('script').remove();
+		// 	$('<script>').html(excode + translatedcode).appendTo('head');
+		// })
 
 		document.getElementById('checkcode').onclick = function(){
-			getcode();
-			savecode(code);
-			translatecode(code);
-			displayCode(translatedcode);
+			getCode();
+			translateCode(code);	
+			//saveCode(code);
+			//displayCode(translatedcode);
 		};
 
-		function getcode(){
+		function getCode(){
 			code = editor.getDoc().getValue();
 		}
 
-		function savecode(code){
+		function translateCode(code){	
+
+			getJStext()
+			.then(function(result){
+				console.log(code);
+
+				for (const key in result) {
+					if(result[key] === 'vindElementMetId'){
+						console.log('here');
+					}
+					translatedcode = code.replace(result[key], key);
+					code = translatedcode;	
+				}
+
+				console.log(code);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});	
+
+			
+		}
+
+		function saveCode(code){
 
 			console.log(code);
 			
@@ -142,12 +166,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 		}
 
-		function translatecode(code){		
-			for (const property in object) {
-				translatedcode = code.replace(`${property}`, `${object[property]}`);
-				code = translatedcode;
-			}
-		}
+		
 
 		function displayCode(code){
 			$('script').remove();

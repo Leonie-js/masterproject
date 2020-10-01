@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.css">
-	<link rel="stylesheet" type="text/css" href="https://codemirror.net/addon/lint/lint.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/codemirror.js"></script>
-	<script src="https://ajax.aspnetcdn.com/ajax/jshint/r07/jshint.js"></script>
-	<script src="https://codemirror.net/mode/javascript/javascript.js"></script>
-	<script src="https://codemirror.net/addon/lint/lint.js"></script>
-	<script src="https://codemirror.net/addon/lint/javascript-lint.js"></script>
 	<script src="script.js"></script>
 	<title>Learn Javascript in Dutch!</title>
 </head>
@@ -17,6 +10,7 @@
 	<h1> Module 1 </h1>
 	<?php 
 		$language = $_GET["language"];
+		$userID = $_GET["userID"];
 
 		if ($language == 'english'){
 
@@ -158,19 +152,10 @@ Everything in between is a comment.
 */</span></code></pre><br/>
 		<pre style="width: 300px;"><span class="comment">// This is a one line comment.</span></pre> <br/><br/>
 
-		<button href="nextpage">Go to module exercise</button>
+		<?php echo "<a href='/exercise-1?userID=".$userID."&language=".$language."'>Go to module 1 exercise</a>"?>
 	</div>
 
-	<div class="codeeditor">
-		<h1>Code input</h1>
-		<p> use id "voorbeeld" to put text in the output below.</p>
-		<textarea id="codeinput"></textarea>
-
-		<input id="checkcode" type="submit" value="Check Code"/>
-
-		<h1>Code output</h1>
-		<div id="voorbeeld" ></div>
-	</div>
+	
 	<?php   
 		} else if ($language == 'dutch'){
 	?>
