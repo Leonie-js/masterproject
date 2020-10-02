@@ -82,6 +82,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	if (codemirror){
 
+		var url = new URL(window.location.href);
+		var userID = url.searchParams.get("userID");
+
+		var modulename = window.location.pathname;
+		var moduleID = modulename.substr(modulename.length - 1);
+
 		var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
 			mode: "javascript",
 			lineNumbers: true,
@@ -92,17 +98,17 @@ document.addEventListener('DOMContentLoaded', function(){
 		});
 		editor.save();
 
-		//loadCode();
+		loadCode();
 
-		var endExercise = document.getElementById('codeinput');
+		var voorbeeld = document.getElementById('voorbeeld');
 		var excerciseCode = '';
 		var code = '';
-		var translatedCode;
+		var	excode = '';
 
 		// $('#ex1').change(function(){
 
 		// 	ex = $('#ex1').val();
-		// 	excode = '';
+		
 
 		// 	excode = 'document.getElementById(\"box\").innerHTML = \"<p>id=\'box\'</p>' + ex + '\";'
 		// 	$('script').remove();
@@ -111,10 +117,21 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		document.getElementById('checkcode').onclick = function(){
 			getCode();
-			translateCode(code);	
-			//saveCode(code);
-			//displayCode(translatedcode);
+			translateCode(code);
 		};
+
+		function loadCode(){
+			var filename = userID +'-'+ moduleID +'.js';
+			$.ajax({
+				type: "GET",
+				url: filename,
+				success: function(success)
+				{
+					//console.log(success.toString());
+					editor.getDoc().setValue(success);
+				}
+			});
+		}
 
 		function getCode(){
 			code = editor.getDoc().getValue();
@@ -124,36 +141,47 @@ document.addEventListener('DOMContentLoaded', function(){
 
 			getJStext()
 			.then(function(result){
-				console.log(code);
 
 				for (const key in result) {
-					if(result[key] === 'vindElementMetId'){
-						console.log('here');
-					}
-					translatedcode = code.replace(result[key], key);
-					code = translatedcode;	
+
+					if (result[key] === undefined || result[key] === ''){
+						delete result[key];
+					} else {
+						var word = result[key].slice(0,-1);
+						if (code.includes(word)){
+							translatedcode = code.replace(word, key);
+						} else if (code.toLowerCase().includes(word.toLowerCase())){
+							console.log('bijna');
+						}
+					}		
 				}
 
-				console.log(code);
+				var source = [
+				  code
+				];
+				var options = {
+				};
+				var predef = {
+				};
+
+				JSHINT(source, options, predef);
+
+				console.log(JSHINT.data());
+
+				// console.log('its so gonna break');
+				// JSHINT(code);
+				// console.log(JSHINT(code));
+				// console.log(JSHINT.data());
+
+				saveCode(code);
 			})
 			.catch(function(error) {
 				console.log(error);
-			});	
-
+			});
 			
 		}
 
 		function saveCode(code){
-
-			console.log(code);
-			
-			var url = new URL(window.location.href);
-			var userID = url.searchParams.get("userID");
-			console.log(userID);
-
-			var modulename = window.location.pathname;
-			var moduleID = modulename.substr(modulename.length - 1);
-			console.log(moduleID);
 
 			$.ajax({
 				type: "POST",
@@ -161,9 +189,13 @@ document.addEventListener('DOMContentLoaded', function(){
 				data: "attempt=" + code + '&userID=' + userID + '&moduleID=' + moduleID + '&finished=0',
 				success: function(success)
 				{
-					console.log(success);
+					//console.log(success);
 				}
 			});
+
+			if (voorbeeld){
+				displayCode(translatedcode);
+			}			
 		}
 
 		
@@ -225,7 +257,9 @@ function getJStext(done){
 			.replace(/<!--[\s\S]*?-->/g, '')
 			.split('\n')
 			.map(function(x) { return x.split(';') })
-			.reduce(function(acc, pair) { acc[pair[0]] = pair[1]; return acc }, {});
+			.reduce(function(acc, pair) { 
+				acc[pair[0]] = pair[1]; 
+				return acc; }, {});
 
 			resolve(dict);
 	};
