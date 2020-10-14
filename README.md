@@ -4,7 +4,7 @@ To do:
 - add dutch syntax names
 - add google analytics
 - add data about time spend on application
-~- check code of assignments are valid js ~
+- ~~check code of assignments are valid js~ ~
 - add dutch pages
 - clear error messages
 - add data-answer to all examples
