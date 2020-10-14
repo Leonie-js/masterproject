@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			getJStext()
 			.then(function(result){
 
+
 				var checkcode = false;
 
 				for (const key in result) {
@@ -178,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function(){
 						}
 					}		
 				}
+
 
 				if(checkcode == true){
 					checkCode(code);
@@ -215,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function(){
 		}
 
 		function saveCode(code){
-
 			var uricode = encodeURIComponent(code);
 
 			$.ajax({

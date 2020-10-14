@@ -9,129 +9,99 @@ innerHTML;inHTML
 document;document
 <!-- Object of the whole web page -->
 
-Block;-
-<!-- A block statement is used to group zero or more statements. The block is delimited by a pair of curly brackets. -->
-
-break;-
+break;/
 <!-- Terminates the current loop, switch, or label statement and transfers program control to the statement following the terminated statement. -->
 
-continue;-
+continue;/
 <!-- Terminates execution of the statements in the current iteration of the current or labeled loop, and continues execution of the loop with the next iteration. -->
 
-Empty;-
+Empty;/
 <!-- An empty statement is used to provide no statement, although the JavaScript syntax would expect one. -->
 
-if...else;-
+if...else;/
 <!-- Executes a statement if a specified condition is true. If the condition is false, another statement can be executed. -->
 
-switch;-
+switch;/
 <!-- Evaluates an expression, matching the expression's value to a case clause, and executes statements associated with that case. -->
 
-throw;-
+throw;/
 <!-- Throws a user-defined exception. -->
 
-try...catch;-
+try...catch;/
 <!-- Marks a block of statements to try, and specifies a response, should an exception be thrown. -->
 
-var;-
+var;/
 <!-- Declares a variable, optionally initializing it to a value. -->
 
-let;-
-<!-- Declares a block scope local variable, optionally initializing it to a value. -->
-
-const;-
+const;/
 <!-- Declares a read-only named constant. -->
 
-function;-
+function;/
 <!-- Declares a function with the specified parameters. -->
 
-async function;-
-<!-- Declares an async function with the specified parameters. -->
-
-return;-
+return;/
 <!-- Specifies the value to be returned by a function. -->
 
-class;-
+class;/
 <!-- Declares a class. -->
 
-do...while;-
+do...while;/
 <!-- Creates a loop that executes a specified statement until the test condition evaluates to false. The condition is evaluated after executing the statement, resulting in the specified statement executing at least once. -->
 
-for;-
+for;/
 <!-- Creates a loop that consists of three optional expressions, enclosed in parentheses and separated by semicolons, followed by a statement executed in the loop. -->
 
-for each...in;-
+for each...in;/
 <!-- Iterates a specified variable over all values of object's properties. For each distinct property, a specified statement is executed. -->
 
-for...in;-
+for...in;/
 <!-- Iterates over the enumerable properties of an object, in arbitrary order. For each distinct property, statements can be executed. -->
 
-for...of;-
+for...of;/
 <!-- Iterates over iterable objects (including arrays, array-like objects, iterators and generators), invoking a custom iteration hook with statements to be executed for the value of each distinct property. -->
 
-for await...of;-
+for await...of;/
 <!-- Iterates over async iterable objects, array-like objects, iterators and generators, invoking a custom iteration hook with statements to be executed for the value of each distinct property. -->
 
-while;-
+while;/
 <!-- Creates a loop that executes a specified statement as long as the test condition evaluates to true. The condition is evaluated before executing the statement. -->
 
-debugger;-
+debugger;/
 <!-- Invokes any available debugging functionality. If no debugging functionality is available, this statement has no effect. -->
 
-export;-
+export;/
 <!-- Used to export functions to make them available for imports in external modules, and other scripts. -->
 
-import;-
+import;/
 <!-- Used to import functions exported from an external module, another script. -->
 
-import.meta;-
-<!-- An object exposing context-specific metadata to a JavaScript module. -->
-
-label;-
-<!-- Provides a statement with an identifier that you can refer to using a break or continue statement. -->
-
-with;-
+with;/
 <!-- Extends the scope chain for a statement. -->
 
-this;-
+this;/
 <!-- The this keyword refers to a special property of an execution context. -->
 
-function;-
+function;/
 <!-- The function keyword defines a function expression. -->
 
-class;-
+class;/
 <!-- The class keyword defines a class expression. -->
 
-yield;-
-<!-- Pause and resume a generator function. -->
-
-async function;-
-<!-- The async function defines an async function expression. -->
-
-await;-
-<!-- Pause and resume an async function and wait for the promise's resolution/rejection. -->
-
-new;-
+new;/
 <!-- The new operator creates an instance of a constructor. -->
 
-new.target;-
-<!-- In constructors, new.target refers to the constructor that was invoked by new. -->
-
-super;-
-<!-- The super keyword calls the parent constructor. -->
-
-delete;-
+delete;/
 <!-- The delete operator deletes a property from an object. -->
 
-void;-
+void;/
 <!-- The void operator discards an expression's return value. -->
 
-typeof;-
+typeof;/
 <!-- The typeof operator determines the type of a given object. -->
 
-in;-
+in;/
 <!-- The in operator determines whether an object has a given property. -->
 
-instanceof;-
+instanceof;/
 <!-- The instanceof operator determines whether an object is an instance of another object. -->
 
