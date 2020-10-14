@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		var url = new URL(window.location.href);
 		var userID = url.searchParams.get("userID");
+		var userLanguage = url.searchParams.get("language");
 
 		var modulename = window.location.pathname;
 		var moduleID = modulename.substr(modulename.length - 1);
@@ -117,7 +118,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		document.getElementById('checkcode').onclick = function(){
 			getCode();
-			translateCode(code);
+
+			if (userLanguage == "dutch"){
+				translateCode(code);
+			} else if (userLanguage == "english"){
+				checkCode(code);
+			}
+			
 		};
 
 		function loadCode(){
@@ -127,20 +134,31 @@ document.addEventListener('DOMContentLoaded', function(){
 				url: filename,
 				success: function(success)
 				{
-					//console.log(success.toString());
+					console.log('current');
 					editor.getDoc().setValue(success);
+				},
+				error: function(error){
+					if (moduleID !== 1){
+						moduleID--;
+						loadCode();
+						moduleID++;
+					}
+					console.log('previous');
 				}
 			});
 		}
 
 		function getCode(){
 			code = editor.getDoc().getValue();
+
 		}
 
 		function translateCode(code){	
 
 			getJStext()
 			.then(function(result){
+
+				var checkcode = false;
 
 				for (const key in result) {
 
@@ -149,31 +167,22 @@ document.addEventListener('DOMContentLoaded', function(){
 					} else {
 						var word = result[key].slice(0,-1);
 						if (code.includes(word)){
-							translatedcode = code.replace(word, key);
+							code = code.replace(word, key);
+							checkcode = true;
 						} else if (code.toLowerCase().includes(word.toLowerCase())){
 							console.log('bijna');
+							checkcode = false;
+							break;
+						} else {
+							checkcode = true;
 						}
 					}		
 				}
 
-				var source = [
-				  code
-				];
-				var options = {
-				};
-				var predef = {
-				};
-
-				JSHINT(source, options, predef);
-
-				console.log(JSHINT.data());
-
-				// console.log('its so gonna break');
-				// JSHINT(code);
-				// console.log(JSHINT(code));
-				// console.log(JSHINT.data());
-
-				saveCode(code);
+				if(checkcode == true){
+					checkCode(code);
+				}
+		
 			})
 			.catch(function(error) {
 				console.log(error);
@@ -181,15 +190,43 @@ document.addEventListener('DOMContentLoaded', function(){
 			
 		}
 
+		function checkCode(code){
+			var source = [
+			  code
+			];
+			var options = {
+			};
+			var predef = {
+			};
+
+			JSHINT(source, options, predef);
+
+			var jshint = new Object();
+			jshint = JSHINT.data();
+
+			if ('errors' in jshint){
+				console.log('there are errors');
+				console.log(jshint);
+			} else {
+				console.log('there are no errors');
+				saveCode(code);
+
+			}
+		}
+
 		function saveCode(code){
+
+			var uricode = encodeURIComponent(code);
 
 			$.ajax({
 				type: "POST",
 				url: 'codesave.php',
-				data: "attempt=" + code + '&userID=' + userID + '&moduleID=' + moduleID + '&finished=0',
+				data: "attempt=" + uricode + '&userID=' + userID + '&moduleID=' + moduleID + '&finished=0',
 				success: function(success)
 				{
-					//console.log(success);
+					console.log('saved');
+					console.log(success);
+					console.log(uricode);
 				}
 			});
 

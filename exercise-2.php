@@ -31,7 +31,6 @@
 	<h1> Module 1 </h1>
 
 	<div class="codeeditor">
-
 		<?php 
 			if ($language == "dutch"){
 		?>
@@ -54,7 +53,7 @@
 		<?php
 			}
 		?>
-		
+
 		<textarea id="codeinput"></textarea>
 
 		<input id="checkcode" type="submit" value="Check Code"/>

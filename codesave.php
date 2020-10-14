@@ -12,6 +12,7 @@ if (file_exists($filename)){
 	unlink($filename);
 }
 $file = fopen($filename, 'w');
+var_dump($attempt);
 fwrite($file, $attempt);
 fclose($file);
 
