@@ -18,7 +18,8 @@ continue;/
 Empty;/
 <!-- An empty statement is used to provide no statement, although the JavaScript syntax would expect one. -->
 
-if...else;/
+if;als
+else;anders
 <!-- Executes a statement if a specified condition is true. If the condition is false, another statement can be executed. -->
 
 switch;/
@@ -29,9 +30,6 @@ throw;/
 
 try...catch;/
 <!-- Marks a block of statements to try, and specifies a response, should an exception be thrown. -->
-
-var;/
-<!-- Declares a variable, optionally initializing it to a value. -->
 
 const;/
 <!-- Declares a read-only named constant. -->

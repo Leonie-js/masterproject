@@ -89,15 +89,28 @@ document.addEventListener('DOMContentLoaded', function(){
 		var modulename = window.location.pathname;
 		var moduleID = modulename.substr(modulename.length - 1);
 
-		var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
-			mode: "javascript",
-			lineNumbers: true,
-			indentWithTabs: true,
-			gutters: ["CodeMirror-lint-markers"],
-			lint:true,
-			theme: 'monokai'
-		});
-		editor.save();
+		if (userLanguage == "dutch"){
+			var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
+				mode: "javascript",
+				lineNumbers: true,
+				indentWithTabs: true,
+				gutters: ["CodeMirror-lint-markers"],
+				lint:true,
+				theme: 'monokai'
+			});
+			editor.save();
+		} else if (userLanguage == "english"){
+			var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
+				mode: "javascript",
+				lineNumbers: true,
+				indentWithTabs: true,
+				gutters: ["CodeMirror-lint-markers"],
+				lint:true,
+				theme: 'monokai'
+			});
+			editor.save();
+		}
+		
 
 		loadCode();
 
@@ -135,7 +148,11 @@ document.addEventListener('DOMContentLoaded', function(){
 				success: function(success)
 				{
 					console.log('current');
-					editor.getDoc().setValue(success);
+					if (userLanguage == "dutch"){
+						translateCodeBack(success);
+					} else {
+						editor.getDoc().setValue(success);
+					}
 				},
 				error: function(error){
 					if (moduleID !== 1){
@@ -146,6 +163,34 @@ document.addEventListener('DOMContentLoaded', function(){
 					console.log('previous');
 				}
 			});
+		}
+
+		function translateCodeBack(code){	
+
+			getJStext()
+			.then(function(result){
+				
+				for (const value in result) {
+
+					if (result[value] === undefined || result[value] === ''){
+						delete value;
+					} else {
+						var word = result[value].slice(0,-1);
+						if (code.includes(value)){
+							while(code.includes(value)){
+								code = code.replace(value, word);
+							}
+						} 
+					}		
+				}
+
+				editor.getDoc().setValue(code);				
+		
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+			
 		}
 
 		function getCode(){
@@ -168,7 +213,9 @@ document.addEventListener('DOMContentLoaded', function(){
 					} else {
 						var word = result[key].slice(0,-1);
 						if (code.includes(word)){
-							code = code.replace(word, key);
+							while(code.includes(word)){
+								code = code.replace(word, key);
+							}
 							checkcode = true;
 						} else if (code.toLowerCase().includes(word.toLowerCase())){
 							console.log('bijna');
@@ -180,10 +227,16 @@ document.addEventListener('DOMContentLoaded', function(){
 					}		
 				}
 
+				// if (userLanguage == "dutch"){
+				// 	saveCode(code);
+				// } else if (userLanguage == "english"){
+					if(checkcode == true){
+						checkCode(code);
+					} else {
 
-				if(checkcode == true){
-					checkCode(code);
-				}
+					}
+				//}
+				
 		
 			})
 			.catch(function(error) {

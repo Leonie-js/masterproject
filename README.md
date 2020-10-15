@@ -1,6 +1,7 @@
 To do:
 - fix login security
-- add dutch syntax names
+- ~~add dutch syntax names~~
+- ~~translate previous js back~~
 - add data-answer to all examples
 - add data about time spend on application
 - ~~check code of assignments are valid js~~
