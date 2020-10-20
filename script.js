@@ -145,8 +145,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			$.ajax({
 				type: "GET",
 				url: filename,
-				success: function(success)
-				{
+				success: function(success){
 					console.log('current');
 					if (userLanguage == "dutch"){
 						translateCodeBack(success);
@@ -165,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 		}
 
-		function translateCodeBack(code){	
+		function translateCodeBack(code){
 
 			getJStext()
 			.then(function(result){
@@ -177,13 +176,13 @@ document.addEventListener('DOMContentLoaded', function(){
 					} else {
 						var word = result[value].slice(0,-1);
 						if (code.includes(value)){
-							while(code.includes(value)){
-								code = code.replace(value, word);
+							var wordlength = occurrences(code, value);
+							for (var i = wordlength; i > 0; i--) {
+							 	code = code.replace(value, word);
 							}
 						} 
 					}		
 				}
-
 				editor.getDoc().setValue(code);				
 		
 			})
@@ -198,11 +197,30 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		}
 
+		function occurrences(string, subString, allowOverlapping) {
+
+		    string += "";
+		    subString += "";
+		    if (subString.length <= 0) return (string.length + 1);
+
+		    var n = 0,
+		        pos = 0,
+		        step = allowOverlapping ? 1 : subString.length;
+
+		    while (true) {
+		        pos = string.indexOf(subString, pos);
+		        if (pos >= 0) {
+		            ++n;
+		            pos += step;
+		        } else break;
+		    }
+		    return n;
+		}
+
 		function translateCode(code){	
 
 			getJStext()
 			.then(function(result){
-
 
 				var checkcode = false;
 
@@ -213,8 +231,9 @@ document.addEventListener('DOMContentLoaded', function(){
 					} else {
 						var word = result[key].slice(0,-1);
 						if (code.includes(word)){
-							while(code.includes(word)){
-								code = code.replace(word, key);
+							var wordlength = occurrences(code, word);
+							for (var i = wordlength; i > 0; i--) {
+							 	code = code.replace(word, key);
 							}
 							checkcode = true;
 						} else if (code.toLowerCase().includes(word.toLowerCase())){
@@ -226,16 +245,12 @@ document.addEventListener('DOMContentLoaded', function(){
 						}
 					}		
 				}
+				
+				if(checkcode == true){
+					checkCode(code);
+				} else {
 
-				// if (userLanguage == "dutch"){
-				// 	saveCode(code);
-				// } else if (userLanguage == "english"){
-					if(checkcode == true){
-						checkCode(code);
-					} else {
-
-					}
-				//}
+				}
 				
 		
 			})
@@ -279,8 +294,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				success: function(success)
 				{
 					console.log('saved');
-					console.log(success);
-					console.log(uricode);
 				}
 			});
 

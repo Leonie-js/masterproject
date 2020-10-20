@@ -1078,8 +1078,8 @@ var JSHINT = (function () {
             s = s.replace(/\t/g, tab);
             at = s.search(cx);
 
-            if (at >= 0)
-                warningAt("Unsafe character.", line, at);
+            // if (at >= 0)
+            //     warningAt("Unsafe character.", line, at);
 
             if (option.maxlen && option.maxlen < s.length)
                 warningAt("Line too long.", line, s.length);
@@ -1363,7 +1363,7 @@ unclosedString:     for (;;) {
 
                         if (c.isDigit()) {
                             if (!isFinite(Number(t))) {
-                                warningAt("Bad number '{a}'.",
+                                warningAt("Vekeerd nummer '{a}'.",
                                     line, character, t);
                             }
                             if (s.substr(0, 1).isAlpha()) {
@@ -2190,7 +2190,7 @@ loop:   for (;;) {
     function prefix(s, f) {
         var x = symbol(s, 150);
         reserveName(x);
-        x.nud = (typeof f === 'function') ? f : function () {
+        x.nud = (typeof f === 'function' || typeof f === 'functie') ? f : function () {
             this.right = expression(150);
             this.arity = 'unary';
             if (this.id === '++' || this.id === '--') {
@@ -2224,7 +2224,7 @@ loop:   for (;;) {
 
     function reservevar(s, v) {
         return reserve(s, function () {
-            if (typeof v === 'function') {
+            if (typeof v === 'function' || typeof v === 'functie') {
                 v(this);
             }
             return this;
@@ -2243,7 +2243,7 @@ loop:   for (;;) {
             if (s === "in" && left.id === "!") {
                 warning("Confusing use of '{a}'.", left, '!');
             }
-            if (typeof f === 'function') {
+            if (typeof f === 'function' || typeof f === 'functie') {
                 return f(left, this);
             } else {
                 this.left = left;
@@ -2299,7 +2299,7 @@ loop:   for (;;) {
             if (predefined[left.value] === false &&
                     scope[left.value]['(global)'] === true) {
                 warning("Read only.", left);
-            } else if (left['function']) {
+            } else if (left['function'] || left['functie']) {
                 warning("'{a}' is a function.", left, left.value);
             }
             if (left) {
@@ -2319,7 +2319,7 @@ loop:   for (;;) {
                     that.right = expression(19);
                     return that;
                 }
-                if (left === syntax['function']) {
+                if (left === syntax['function'] || left === syntax['functie']) {
                     warning(
 "Expected an identifier in an assignment and instead saw a function invocation.",
                                 token);
@@ -2333,7 +2333,7 @@ loop:   for (;;) {
     function bitwise(s, f, p) {
         var x = symbol(s, p);
         reserveName(x);
-        x.led = (typeof f === 'function') ? f : function (left) {
+        x.led = (typeof f === 'function' || typeof f === 'functie') ? f : function (left) {
             if (option.bitwise) {
                 warning("Unexpected use of '{a}'.", this, this.id);
             }
@@ -2359,7 +2359,7 @@ loop:   for (;;) {
                     expression(19);
                     return that;
                 }
-                if (left === syntax['function']) {
+                if (left === syntax['function'] || left === syntax['functie']) {
                     warning(
 "Expected an identifier in an assignment, and instead saw a function invocation.",
                                 token);
@@ -2412,7 +2412,7 @@ loop:   for (;;) {
         if (i) {
             return i;
         }
-        if (token.id === 'function' && nexttoken.id === '(') {
+        if ((token.id === 'function' || token.id === 'functie') && nexttoken.id === '(') {
             warning("Missing name in function declaration.");
         } else {
             error("Expected an identifier and instead saw '{a}'.",
@@ -2432,7 +2432,7 @@ loop:   for (;;) {
                 return;
             }
             if (t.id !== '(endline)') {
-                if (t.id === 'function') {
+                if (t.id === 'function' || t.id === 'functie') {
                     if (!option.latedef) {
                         break;
                     }
@@ -2699,7 +2699,7 @@ loop:   for (;;) {
 
     function note_implied(token) {
         var name = token.value, line = token.line, a = implied[name];
-        if (typeof a === 'function') {
+        if (typeof a === 'function' || typeof a === 'functie') {
             a = false;
         }
 
@@ -2731,7 +2731,7 @@ loop:   for (;;) {
                 s = scope[v],
                 f;
 
-            if (typeof s === 'function') {
+            if (typeof s === 'function' || typeof s === 'functie') {
                 // Protection against accidental inheritance.
                 s = undefined;
             } else if (typeof s === 'boolean') {
@@ -2755,6 +2755,9 @@ loop:   for (;;) {
                     break;
                 case 'function':
                     this['function'] = true;
+                    break;
+                case 'functie':
+                    this['functie'] = true;
                     break;
                 case 'label':
                     warning("'{a}' is a statement label.", token, v);
@@ -2785,6 +2788,7 @@ loop:   for (;;) {
                 switch (funct[v]) {
                 case 'closure':
                 case 'function':
+                case 'functie':
                 case 'var':
                 case 'unused':
                     warning("'{a}' used out of scope.", token, v);
@@ -2822,6 +2826,7 @@ loop:   for (;;) {
                     } else {
                         switch (s[v]) {
                         case 'function':
+                        case 'functie':
                         case 'unction':
                             this['function'] = true;
                             s[v] = 'closure';
@@ -2876,6 +2881,7 @@ loop:   for (;;) {
     delim('#');
     delim('@');
     reserve('else');
+    reserve('anders');
     reserve('case').reach = true;
     reserve('catch');
     reserve('default').reach = true;
@@ -2917,6 +2923,7 @@ loop:   for (;;) {
         that.right = expression(10);
         advance(':');
         that['else'] = expression(10);
+        that['anders'] = expression(10);
         return that;
     }, 30);
 
@@ -3044,7 +3051,7 @@ loop:   for (;;) {
     prefix('typeof', 'typeof');
     prefix('new', function () {
         var c = expression(155), i;
-        if (c && c.id !== 'function') {
+        if ((c && c.id !== 'function') || (c && c.id !== 'functie')) {
             if (c.identifier) {
                 c['new'] = true;
                 switch (c.value) {
@@ -3060,11 +3067,17 @@ loop:   for (;;) {
                         warning("The Function constructor is eval.");
                     }
                     break;
+                case 'Functie':
+                    if (!option.evil) {
+                        warning("The Function constructor is eval.");
+                    }
+                    break;
                 case 'Date':
+                case 'Datum':
                 case 'RegExp':
                     break;
                 default:
-                    if (c.id !== 'function') {
+                    if (c.id !== 'function' || c.id !== 'functie') {
                         i = c.value.substr(0, 1);
                         if (option.newcap && (i < 'A' || i > 'Z')) {
                             warning("A constructor name should start with an uppercase letter.",
@@ -3089,6 +3102,60 @@ loop:   for (;;) {
         return this;
     });
     syntax['new'].exps = true;
+
+    prefix('nieuwe', function () {
+        var c = expression(155), i;
+        if ((c && c.id !== 'function') || (c && c.id !== 'functie')) {
+            if (c.identifier) {
+                c['nieuwe'] = true;
+                switch (c.value) {
+                case 'Number':
+                case 'String':
+                case 'Boolean':
+                case 'Math':
+                case 'JSON':
+                    warning("Do not use {a} as a constructor.", token, c.value);
+                    break;
+                case 'Function':
+                    if (!option.evil) {
+                        warning("The Function constructor is eval.");
+                    }
+                    break;
+                case 'Functie':
+                    if (!option.evil) {
+                        warning("The Function constructor is eval.");
+                    }
+                    break;
+                case 'Date':
+                case 'Datum':
+                case 'RegExp':
+                    break;
+                default:
+                    if (c.id !== 'function' || c.id !== 'functie') {
+                        i = c.value.substr(0, 1);
+                        if (option.newcap && (i < 'A' || i > 'Z')) {
+                            warning("A constructor name should start with an uppercase letter.",
+                                token);
+                        }
+                    }
+                }
+            } else {
+                if (c.id !== '.' && c.id !== '[' && c.id !== '(') {
+                    warning("Bad constructor.", token);
+                }
+            }
+        } else {
+            if (!option.supernew)
+                warning("Weird construction. Delete 'new'.", this);
+        }
+        adjacent(token, nexttoken);
+        if (nexttoken.id !== '(' && !option.supernew) {
+            warning("Missing '()' invoking a constructor.");
+        }
+        this.first = c;
+        return this;
+    });
+    syntax['nieuwe'].exps = true;
 
     prefix('void').exps = true;
 
@@ -3183,7 +3250,7 @@ loop:   for (;;) {
 
     prefix('(', function () {
         nospace();
-        if (nexttoken.id === 'function') {
+        if (nexttoken.id === 'function' || nexttoken.id === 'functie') {
             nexttoken.immed = true;
         }
         var v = expression(0);
@@ -3326,7 +3393,7 @@ loop:   for (;;) {
         token.funct = funct;
         functions.push(funct);
         if (i) {
-            addlabel(i, 'function');
+            addlabel(i, 'function'); //HIERSO
         }
         funct['(params)'] = functionparams();
 
@@ -3596,7 +3663,42 @@ loop:   for (;;) {
         return this;
     });
 
+    blockstmt('functie', function () {
+        if (inblock) {
+            warning("Function declarations should not be placed in blocks. " +
+                "Use a function expression or move the statement to the top of " +
+                "the outer function.", token);
+
+        }
+        var i = identifier();
+        if (option.esnext && funct[i] === "const") {
+            warning("const '" + i + "' has already been declared");
+        }
+        adjacent(token, nexttoken);
+        addlabel(i, 'unction');
+        doFunction(i, true);
+        if (nexttoken.id === '(' && nexttoken.line === token.line) {
+            error(
+"Function declarations are not invocable. Wrap the whole function invocation in parens.");
+        }
+        return this;
+    });
+
     prefix('function', function () {
+        var i = optionalidentifier();
+        if (i) {
+            adjacent(token, nexttoken);
+        } else {
+            nonadjacent(token, nexttoken);
+        }
+        doFunction(i);
+        if (!option.loopfunc && funct['(loopage)']) {
+            warning("Don't make functions within a loop.");
+        }
+        return this;
+    });
+
+    prefix('functie', function () {
         var i = optionalidentifier();
         if (i) {
             adjacent(token, nexttoken);
@@ -3629,6 +3731,33 @@ loop:   for (;;) {
             nonadjacent(token, nexttoken);
             advance('else');
             if (nexttoken.id === 'if' || nexttoken.id === 'switch') {
+                statement(true);
+            } else {
+                block(true, true);
+            }
+        }
+        return this;
+    });
+
+    blockstmt('als', function () {
+        var t = nexttoken;
+        advance('(');
+        nonadjacent(this, t);
+        nospace();
+        expression(20);
+        if (nexttoken.id === '=') {
+            if (!option.boss)
+                warning("Expected a conditional expression and instead saw an assignment.");
+            advance('=');
+            expression(20);
+        }
+        advance(')', t);
+        nospace(prevtoken, token);
+        block(true, true);
+        if (nexttoken.id === 'anders') {
+            nonadjacent(token, nexttoken);
+            advance('anders');
+            if (nexttoken.id === 'als' || nexttoken.id === 'switch') {
                 statement(true);
             } else {
                 block(true, true);

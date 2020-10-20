@@ -28,9 +28,9 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
 
     return {
       "if": kw("if"), "als": kw("als"), "while": A, "with": A, "else": B, "anders": B, "do": B, "try": B, "finally": B,
-      "return": D, "break": D, "continue": D, "new": kw("new"), "delete": C, "void": C, "throw": C,
+      "return": D, "break": D, "continue": D, "new": kw("new"), "nieuwe": kw("nieuwe"), "delete": C, "void": C, "throw": C,
       "debugger": kw("debugger"), "var": kw("var"), "const": kw("var"), "let": kw("var"),
-      "function": kw("function"), "catch": kw("catch"),
+      "function": kw("function"), "functie": kw("functie"), "catch": kw("catch"),
       "for": kw("for"), "switch": kw("switch"), "case": kw("case"), "default": kw("default"),
       "in": operator, "typeof": operator, "instanceof": operator,
       "true": atom, "false": atom, "null": atom, "undefined": atom, "NaN": atom, "Infinity": atom,
@@ -380,6 +380,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
       return cont(pushlex("form"), parenExpr, statement, poplex, maybeelse);
     }
     if (type == "function") return cont(functiondef);
+    if (type == "functie") return cont(functiondef);
     if (type == "for") return cont(pushlex("form"), forspec, statement, poplex);
     if (type == "class" || (isTS && value == "interface")) {
       cx.marked = "keyword"
@@ -438,6 +439,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     var maybeop = noComma ? maybeoperatorNoComma : maybeoperatorComma;
     if (atomicTypes.hasOwnProperty(type)) return cont(maybeop);
     if (type == "function") return cont(functiondef, maybeop);
+    if (type == "functie") return cont(functiondef, maybeop);
     if (type == "class" || (isTS && value == "interface")) { cx.marked = "keyword"; return cont(pushlex("form"), classExpression, poplex); }
     if (type == "keyword c" || type == "async") return cont(noComma ? expressionNoComma : expression);
     if (type == "(") return cont(pushlex(")"), maybeexpression, expect(")"), poplex, maybeop);
@@ -446,6 +448,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     if (type == "{") return contCommasep(objprop, "}", null, maybeop);
     if (type == "quasi") return pass(quasi, maybeop);
     if (type == "new") return cont(maybeTarget(noComma));
+    if (type == "nieuwe") return cont(maybeTarget(noComma));
     if (type == "import") return cont(expression);
     return cont();
   }
