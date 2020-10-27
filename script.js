@@ -24,38 +24,36 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		for (var i =  0; i < exercises.length; i++) {
 			var exercise = exercises[i];
-			var parent = exercise.parentElement.querySelector('code');
-			var children = parent.childNodes.length;
-			var childrenInput = 1;
 			var exerciseid = exercise.id;
 			var inputid = exerciseid.substring(exerciseid.length-3, exerciseid.length);
-
-
-			for (var a = 0; a < children; a++) {
-				if(parent.childNodes[a].nodeName == 'INPUT'){
-		            childrenInput++;
-		        }	
-			}
 			
 			exercise.addEventListener('click', event => {
 				exercise = event.srcElement;
-				parent = exercise.parentElement.querySelector('code');
+				var parent = exercise.parentElement.querySelector('code');
+				var children = parent.childNodes.length;
+				var childrenInput = 0;
 				var labels = parent.getElementsByTagName('label').length;
 				exerciseid = event.srcElement.id;
 				inputid = exerciseid.substring(exerciseid.length-3, exerciseid.length);
 				event.preventDefault();
 
-				console.log(labels);
 				if (labels > 0){
 					var c = labels - 1;
 					for (var b = 0; b < labels; b++) {
-						
-						console.log(parent.getElementsByTagName('label'));
-						console.log(c);
 						parent.getElementsByTagName('label')[c].remove();
 						c --;
 					}	
 				}
+
+				for (var d = 0; d < children; d++) {
+					if(parent.childNodes[d].nodeName == 'INPUT'){
+			            childrenInput++;
+			        }	
+				}
+
+				childrenInput++;
+
+				var rightanswers= 0;
 
 				for (var j = 1; j < childrenInput; j++) {
 					var input = document.getElementById(inputid + '-' + j);
@@ -64,13 +62,30 @@ document.addEventListener('DOMContentLoaded', function(){
 					var errorLabel = document.createElement('label');
 					
 					if (givenAnswer == correctAnswer){
-						var errorText = document.createTextNode("this is correct");
-						errorLabel.appendChild(errorText);
-						input.after(errorLabel);
+						rightanswers++;
 					} else {
 						var errorText = document.createTextNode('this is incorrect');
 						errorLabel.appendChild(errorText);
 						input.after(errorLabel);
+					}
+				}
+
+				childrenInput--;
+
+				if(rightanswers == childrenInput){
+					var goodLabel = document.createElement('label');
+					goodLabel.appendChild(document.createTextNode('everything is correct'));
+					exercise.after(goodLabel);
+					var selectorid = '.output-' + inputid;
+					var exampleoutput = document.querySelector(selectorid);
+
+					if (exampleoutput) {
+						var codeoutput = exampleoutput.dataset.code;
+
+						var script = document.createElement("script");
+						script.innerHTML = codeoutput;
+						$("head").append(script);
+
 					}
 				}
 			});
@@ -94,8 +109,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				mode: "javascript",
 				lineNumbers: true,
 				indentWithTabs: true,
-				gutters: ["CodeMirror-lint-markers"],
-				lint:true,
 				theme: 'monokai'
 			});
 			editor.save();
@@ -104,8 +117,6 @@ document.addEventListener('DOMContentLoaded', function(){
 				mode: "javascript",
 				lineNumbers: true,
 				indentWithTabs: true,
-				gutters: ["CodeMirror-lint-markers"],
-				lint:true,
 				theme: 'monokai'
 			});
 			editor.save();
@@ -114,8 +125,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 		loadCode();
 
-		var voorbeeld = document.getElementById('voorbeeld');
-		var excerciseCode = '';
 		var code = '';
 		var	excode = '';
 
@@ -130,10 +139,10 @@ document.addEventListener('DOMContentLoaded', function(){
 		// })
 
 		document.getElementById('checkcode').onclick = function(){
-			getCode();
+			code = getCode(editor);
 
 			if (userLanguage == "dutch"){
-				translateCode(code);
+				translateCode(code, userID, moduleID, userLanguage);
 			} else if (userLanguage == "english"){
 				checkCode(code);
 			}
@@ -148,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				success: function(success){
 					console.log('current');
 					if (userLanguage == "dutch"){
-						translateCodeBack(success);
+						translateCodeBack(success, editor);
 					} else {
 						editor.getDoc().setValue(success);
 					}
@@ -164,152 +173,271 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 		}
 
-		function translateCodeBack(code){
-
-			getJStext()
-			.then(function(result){
-				
-				for (const value in result) {
-
-					if (result[value] === undefined || result[value] === ''){
-						delete value;
-					} else {
-						var word = result[value].slice(0,-1);
-						if (code.includes(value)){
-							var wordlength = occurrences(code, value);
-							for (var i = wordlength; i > 0; i--) {
-							 	code = code.replace(value, word);
-							}
-						} 
-					}		
-				}
-				editor.getDoc().setValue(code);				
-		
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-			
-		}
-
-		function getCode(){
-			code = editor.getDoc().getValue();
-
-		}
-
-		function occurrences(string, subString, allowOverlapping) {
-
-		    string += "";
-		    subString += "";
-		    if (subString.length <= 0) return (string.length + 1);
-
-		    var n = 0,
-		        pos = 0,
-		        step = allowOverlapping ? 1 : subString.length;
-
-		    while (true) {
-		        pos = string.indexOf(subString, pos);
-		        if (pos >= 0) {
-		            ++n;
-		            pos += step;
-		        } else break;
-		    }
-		    return n;
-		}
-
-		function translateCode(code){	
-
-			getJStext()
-			.then(function(result){
-
-				var checkcode = false;
-
-				for (const key in result) {
-
-					if (result[key] === undefined || result[key] === ''){
-						delete result[key];
-					} else {
-						var word = result[key].slice(0,-1);
-						if (code.includes(word)){
-							var wordlength = occurrences(code, word);
-							for (var i = wordlength; i > 0; i--) {
-							 	code = code.replace(word, key);
-							}
-							checkcode = true;
-						} else if (code.toLowerCase().includes(word.toLowerCase())){
-							console.log('bijna');
-							checkcode = false;
-							break;
-						} else {
-							checkcode = true;
-						}
-					}		
-				}
-				
-				if(checkcode == true){
-					checkCode(code);
-				} else {
-
-				}
-				
-		
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-			
-		}
-
-		function checkCode(code){
-			var source = [
-			  code
-			];
-			var options = {
-			};
-			var predef = {
-			};
-
-			JSHINT(source, options, predef);
-
-			var jshint = new Object();
-			jshint = JSHINT.data();
-
-			if ('errors' in jshint){
-				console.log('there are errors');
-				console.log(jshint);
-			} else {
-				console.log('there are no errors');
-				saveCode(code);
-
-			}
-		}
-
-		function saveCode(code){
-			var uricode = encodeURIComponent(code);
-
-			$.ajax({
-				type: "POST",
-				url: 'codesave.php',
-				data: "attempt=" + uricode + '&userID=' + userID + '&moduleID=' + moduleID + '&finished=0',
-				success: function(success)
-				{
-					console.log('saved');
-				}
-			});
-
-			if (voorbeeld){
-				displayCode(translatedcode);
-			}			
-		}
-
-		
-
 		function displayCode(code){
-			$('script').remove();
-			$('<script>').html(excode + code).appendTo('head');
+			var script = document.createElement("script");
+			// script.type = "text/javascript";
+			// script.src = userID +'-'+ moduleID +'.js';
+			script.innerHTML = code;
+			$("head").append(script);
+			// $('script').remove();
+			// $('<script>').html(code).appendTo('head');
 		}
-	}	
+	}
+
+	var comparison = document.getElementById("comparison");
+
+	if (comparison){
+		var url = new URL(window.location.href);
+		var userID = url.searchParams.get("userID");
+		var userLanguage = url.searchParams.get("language");
+
+		var modulename = window.location.pathname;
+		var moduleID = modulename.substr(modulename.length - 1);
+
+		
+		var editor1 = CodeMirror.fromTextArea(document.getElementById('codeinput1'), {
+			mode: "javascript",
+			lineNumbers: true,
+			indentWithTabs: true,
+			theme: 'monokai'
+		});
+		editor1.save();
+
+		var editor2 = CodeMirror.fromTextArea(document.getElementById('codeinput2'), {
+			mode: "javascript",
+			lineNumbers: true,
+			indentWithTabs: true,
+			readOnly: true,
+			theme: 'monokai'
+		});
+		editor2.save();
+
+		var filename = userID +'-'+ moduleID +'.js';
+		$.ajax({
+			type: "GET",
+			url: filename,
+			success: function(success){
+				if (userLanguage == "dutch"){
+					translateCodeBack(success, editor1);
+				} else {
+					editor.getDoc().setValue(success);
+				}
+			},
+			error: function(error){
+				console.log('error');
+			}
+		});
+
+		var filename2 = 'module-'+ moduleID +'.js';
+		$.ajax({
+			type: "GET",
+			url: filename2,
+			success: function(success){
+				editor2.getDoc().setValue(success);
+			},
+			error: function(error){
+				console.log('error');
+			}
+		});
+
+		$('#codechange').click(function(event){
+			event.preventDefault();
+
+			var code = getCode(editor2);
+			saveCode(code, userID, moduleID);
+		});
+
+		$('#codetakeover').click(function(event){
+			event.preventDefault();
+
+			var code = getCode(editor2);
+			editor1.getDoc().setValue(code);
+
+			saveCode(code, userID, moduleID);
+		});
+
+	}
+
 }, false);
+
+function translateCodeBack(code, editor){
+
+	getJStext()
+	.then(function(result){
+		
+		for (const value in result) {
+
+			if (result[value] === undefined || result[value] === ''){
+				delete value;
+			} else {
+				var word = result[value].slice(0,-1);
+				if (code.includes(value)){
+					var wordlength = occurrences(code, value);
+					for (var i = wordlength; i > 0; i--) {
+					 	code = code.replace(value, word);
+					}
+				} 
+			}		
+		}
+		editor.getDoc().setValue(code);				
+
+	})
+	.catch(function(error) {
+		console.log(error);
+	});
+	
+}
+
+function getCode(editor){
+	code = editor.getDoc().getValue();
+
+	return code;
+}
+
+function occurrences(string, subString, allowOverlapping) {
+
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0,
+        pos = 0,
+        step = allowOverlapping ? 1 : subString.length;
+
+    while (true) {
+        pos = string.indexOf(subString, pos);
+        if (pos >= 0) {
+            ++n;
+            pos += step;
+        } else break;
+    }
+    return n;
+}
+
+function translateCode(code, userID, moduleID, language){	
+
+	getJStext()
+	.then(function(result){
+
+		var checkcode = false;
+
+		for (const key in result) {
+
+			if (result[key] === undefined || result[key] === ''){
+				delete result[key];
+			} else {
+				var word = result[key].slice(0,-1);
+				if (code.includes(word)){
+					var wordlength = occurrences(code, word);
+					for (var i = wordlength; i > 0; i--) {
+					 	code = code.replace(word, key);
+					}
+					checkcode = true;
+				} else if (code.toLowerCase().includes(word.toLowerCase())){
+					console.log('bijna');
+					checkcode = false;
+					break;
+				} else {
+					checkcode = true;
+				}
+			}		
+		}
+		
+		if(checkcode == true){
+			checkCode(code, userID, moduleID, language);
+		} else {
+
+		}
+		
+
+	})
+	.catch(function(error) {
+		console.log(error);
+	});
+	
+}
+
+function checkCode(code, userID, moduleID, language){
+	var source = [
+	  code
+	];
+	var options = {
+	};
+	var predef = {
+	};
+
+	JSHINT(source, options, predef);
+
+	var jshint = new Object();
+	jshint = JSHINT.data();
+
+	if ('errors' in jshint){
+		console.log('there are errors');
+		var errors = jshint.errors;
+		var errorlength = jshint.errors.length;
+		var nummer;
+
+		if (language == 'dutch'){
+
+			var errorstring = '<div id="errors"><p>Er zijn error(s) gevonden. Kijk of je ze kan oplossen, als dit niet lukt ga door naar de volgende pagina.<ul>';
+
+			for (var m = 0; m < errorlength; m++) {
+				nummer = m + 1;
+				errorstring += '<li>Error ' + nummer +'<br> Reden: ' + jshint.errors[m].reason 
+				+ '<br> Bij letter: ' + jshint.errors[m].character + '</li>';
+			}
+
+			errorstring += '</ul></p></div>';
+
+		} else {
+
+			var errorstring = '<div id="errors"><p>There is/are error(s) found. Look if you can solve them, if not go to the next page.<ul>';
+
+			for (var m = 0; m < errorlength; m++) {
+				nummer = m + 1;
+				errorstring += '<li>Error ' + nummer +'<br> Reason: ' + jshint.errors[m].reason 
+				+ '<br> At character: ' + jshint.errors[m].character + '</li>';
+			}
+
+			errorstring += '</ul></p></div>';
+
+		}
+
+		$(errorstring).insertBefore("#codeinput");
+
+		console.log(errorstring);
+
+		saveCode(code, userID, moduleID);
+	} else {
+		console.log('there are no errors');
+
+		if ($('#errors')){
+			$('#errors').remove();
+		}
+		saveCode(code, userID, moduleID);
+
+	}
+}
+
+function saveCode(code, userID, moduleID){
+	var uricode = encodeURIComponent(code);
+
+	$.ajax({
+		type: "POST",
+		url: 'codesave.php',
+		data: "attempt=" + uricode + '&userID=' + userID + '&moduleID=' + moduleID + '&finished=0',
+		success: function(success)
+		{
+			console.log('saved');
+		}
+	});
+
+	var codeoutput = document.getElementById("codeoutput");
+
+	if (codeoutput){
+		displayCode(code);
+	}			
+}
 
 function sendlogin(){
 	

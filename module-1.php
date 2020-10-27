@@ -28,15 +28,17 @@
 		<pre class="ex">myVariable <span class="operator">=</span> <span class="string">'new text'</span>;</pre>
 		<p> Some points to remember: </p>
 		<ul> 
+			<li>A semicolon at the end of a line indicates where a statement ends. It is only required when you need to separate statements on a single line </li>
 			<li>No two variables can have the same name </li>
 			<li>'camelCase' is used with naming variables <br/>
 			This means the first word is lowercase and the words after that with uppercase </li>
+			<li>JavaScript is case sensitive. This means myVariable is not the same as myvariable</li>
 			<li>After declaring a variable you don't put 'var' in front of the name anymore. You only need to do this ones at the start of using the variable. So you can not give it a value and after that declare it.</li>
 		</ul>
 	</div>
 	<div class="example">
 		<h3> Exercise: </h3>
-		<p> Create a variable called 'carName' and assign the value Volvo to it.</p>
+		<p> Create a variable called <b>carName</b> and assign the value Volvo to it.</p>
 
 		<code><span class="keyword">var</span> <input id="1-1-1" type="text" data-answer="carName"> <span class="operator">=</span> <span class="string">"</span><input id="1-1-2" type="text" data-answer="Volvo"><span class="string">"</span>;</code>
 
@@ -131,18 +133,21 @@
 		<h3> Exercise: </h3>
 		<p> Declare the variable 'age' with 12, after that divide it by 6 and check if it equals 2.</p>
 
-		<code class="ex2"><span class="keyword">var</span> age <span class="operator">=</span><input id="ex2value" type="text">;</code><br/>
-		<code class="ex2">age <span class="operator">=</span> age <span class="operator">/</span> <input id="ex2divide" type="text">;</code><br/>
-		<code class="ex2"><span class="keyword">document</span>.<span class="keyword">write</span>(<input id="ex2equal" type="text">);</code><br/>
+		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">var</span> age <span class="operator">=</span><input id="1-2-1" type="text" data-answer="12">;
+age <span class="operator">=</span> age <span class="operator">/</span> <input id="1-2-2" type="text" data-answer="6">;
+<span class="keyword">document</span>.<span class="property">getElementById</span>(<span class="string">'example'</span>).<span class="property">innerHTML</span>=<input id="1-2-3" type="text" data-answer="age">;</code></pre><br/>
 
-		<input id="checkex2" type="submit" value="Check Code"/>
+		<input class="exercise" id="excercise1-2" type="submit" value="Check Code"/>
+
+		<div class="output-1-2" data-code="var age = 12; age = age / 6; document.getElementById('example').innerHTML=age;" id="example"> HERE IT WILL SAY THE AGE </div>
 	</div>
 
 	<div class="instructions">
 		<p> A point to remember: </p>
 		<ul> 
 			<li>When adding a number to a string, Javascript will treat it as a string too.<br/>
-			<code style="display: inline-block;"><span class="keyword">var</span> x = <span class="number">16</span> + <span class="string">"Volvo"</span>;</code> will be treated as<code style="display: inline-block;"><span class="keyword">var</span> x = <span class="string">"16"</span> + <span class="string">"Volvo"</span>;</code> and will say: '16Volvo'.</li>
+			<code style="display: inline-block; width: 170px;"><span class="keyword">var</span> x = <span class="number">16</span> + <span class="string">"Volvo"</span>;</code> will be treated as<code style="display: inline-block; width: 170px;"><span class="keyword">var</span> x = <span class="string">"16"</span> + <span class="string">"Volvo"</span>;</code> and will say: '16Volvo'.</li>
+			<li> To assign a variable the value of another variable you can use the name of the particular variable. This example give myVariable the value of x plus 4. <code style="display: inline-block; width: 170px;"><span class="keyword">var</span> myVariable = x + <span class="number">4</span>;</code></li>
 		</ul>
 		<h2> Comments </h2>
 		<p> Comments are snippets of text that can be added along with code. The browser ignores text marked as comments. You have two different kind of comments, multiline and signle line.</p>
@@ -159,6 +164,149 @@ Everything in between is a comment.
 	<?php   
 		} else if ($language == 'dutch'){
 	?>
+	<div class="instructions">
+		<h2> Variabelen </h2>
+		<p> Variabelen zijn containers waarin u waarden kunt bewaren. U begint door uw variabele te declareren met het var-sleutelwoord. Dat wordt dan gevolgd door de naam die u aan uw variabele geeft. U kunt zelf kiezen welke:</p>
+		<pre><span class="keyword">var</span> mijnVariabele;</pre>
+		<pre><span class="keyword">var</span> mijnAndereVariabele;</pre>
+		<p> Nadat u een variabele hebt gedeclareerd, kunt u hem een waarde geven: </p>
+		<pre class="ex">mijnVariabele <span class="operator">=</span> <span class="string">'tekst'</span>;</pre>
+		<p> Als u dat wenst, kunt u deze twee operaties op dezelfde lijn uitvoeren:</p>
+		<pre class="ex"><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="string">'tekst'</span>;</pre>
+		<pre class="ex">mijnVariabele <span class="operator">=</span> <span class="string">'nieuwe tekst'</span>;</pre>
+		<p> Belangrijke dingen om te onthouden: </p>
+		<ul> 
+			<li>Alle verklaringen in JavaScript moeten op een puntkomma eindigen, om aan te duiden waar de verklaring eindigt.</li>
+			<li>Er mogen geen variabeles zijn met dezelfde naam</li>
+			<li>'camelCase' wordt gebruikt bij het bedenken van namen voor variabelen <br/>
+			Dit betekend dat het eerste woord geen hoofdletter heeft en elk word hierna wel</li>
+			<li>Nadat je een variabele hebt gedeclareerd hoef je geen 'var' meer ervoor te gebruiken. Dit doe je 1 keer om aan te geven in de code dat je een nieuwe variabele maakt. Je kunt dus niet eerst een variabele een waarde geven en hierna pas de variabele declareren.</li>
+		</ul>
+	</div>
+	<div class="example">
+		<h3> Oefening: </h3>
+		<p> Maak de variabele <b>carName</b> en geef het de waarde Volvo.</p>
+
+		<code><span class="keyword">var</span> <input id="1-1-1" type="text" data-answer="carName"> <span class="operator">=</span> <span class="string">"</span><input id="1-1-2" type="text" data-answer="Volvo"><span class="string">"</span>;</code>
+
+		<input class="exercise" id="excercise1-1" type="submit" value="Check de code"/>
+
+		<!-- <div id="box"><p>id="box"</p></div> -->
+	</div>
+	<div class="instructions">
+		<h2> Data types </h2>
+		<p> Variabelen kunnen verschillende datatypes hebben: </p>
+		<table class="standard-table">
+			<tr>
+				<th>Data type</th>
+				<th>Verklaring</th>
+				<th>Voorbeeld</th>
+			</tr>
+			<tr>
+				<th>Streng</th>
+				<td>Een streng is wat als tekst geldt. Om aan te duiden dat de variabele een streng is, moet u die tussen aanhalingstekens zetten.</td>
+				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="string">'tekst'</span>;</code></td>
+			</tr>
+			<tr>
+				<th>Nummer</th>
+				<td>Een nummer. Nummers worden niet omringd door aanhalingstekens .</td>
+				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="number">10</span>;</code></td>
+			</tr>
+			<tr>
+				<th>Boolean</th>
+				<td>Een waarde die waar of niet waar is. De woorden waar en nietWaar zijn speciale sleutelwoorden in JS en hebben geen aanhalingstekens nodig.</td>
+				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator"><span class="operator">=</span></span> <span class="operator">waar</span>;</code></td>
+			</tr>
+			<tr>
+				<th>Reeks</th>
+				<td>Een reeks die u toestaat om meerdere waarden in in één enkele referentie op te slaan (een lijst).</td>
+				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> [<span class="number">1</span>,<span class="string">'Bob'</span>,<span class="string">'Steven'</span>,<span class="number">10</span>];</code><br>Verwijs naar elk lid van de array op deze manier:<br><code>myVariable[0]</code> zegt 1,<br/> <code>myVariable[1]</code> zegt Bob, etc.</td>
+			</tr>
+		</table>
+
+		<h2> Operatoren </h2>
+		<p>Een operator is een mathematisch symbool dat een resultaat produceert. Dit resultaat is gebaseerd op twee waarden (of variabelen). In de volgende tabel kunt u een paar van de eenvoudigste operatoren zien, met een paar voorbeelden ernaast die u in uw Javascript-console kunt uitproberen.</p>
+		<table class="standard-table">
+			<tr>
+				<th>Operator</th>
+				<th>Verklaring</th>
+				<th>Symbo(o)l(en)</th>
+				<th>Voorbeeld</th>
+			</tr>
+			<tr>
+				<th>Optellen, Aaneenschakeling</th>
+				<td>Gebruiken we om twee nummers op te tellen of om twee strengen (tekst dus) aan elkaar te plakken.</td>
+				<td><code><span class="operator">+</span></code></td>
+				<td><code><span class="number">6</span> <span class="operator">+</span> <span class="number">9</span>;</code> zegt 15.<br><code><span class="string">'Hallo '</span> <span class="operator">+</span> <span class="string">'wereld!'</span>;</code> zegt 'Hallo wereld!'.</td>
+			</tr>
+			<tr>
+				<th>Aftrekken, Vermenigvuldigen, Delen</th>
+				<td>Met deze variabelen kunt u rekenen. Dit kan alleen met nummers.</td>
+				<td><code><span class="operator">-</span></code> <code><span class="operator">*</span></code> <code><span class="operator">/</span></code></td>
+				<td><code><span class="number">9</span> <span class="operator">-</span> <span class="number">3</span>;</code> Aftrekken<br><code><span class="number">8</span> <span class="operator">*</span> <span class="number">2</span>;</code> Vermenigvuldigen is in JS een asterisk<br><code><span class="number">9</span> <span class="operator">/</span> <span class="number">3</span>;</code> Delen</td>
+			</tr>
+			<tr>
+				<th>Toewijzingsoperator</th>
+				<td>Dit hebt u al gezien: het wijst een waarde toe aan een variabele.</td>
+				<td><code><span class="operator">=</span></code></td>
+				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="string">'Bob'</span>;</code></td>
+			</tr>
+			<tr>
+				<th>Vergelijken</th>
+				<td>Doet een test om te zien of twee waarden gelijk zijn aan elkaar. Levert een waar/niet waar (Boolean) resultaat op. </td>
+				<td><code><span class="operator">===</span></code></td>
+				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</code><br><code>myVariable <span class="operator">===</span> <span class="number">4</span>;</code>zegt dus nietWaar.</td>
+			</tr>
+			<tr>
+				<th>Negatie, Niet gelijk aan</th>
+				<td>Levert de logisch tegenovergestelde waarde op van wat erop volgt. Het verandert een waar in een nietWaar enz. Als het samen met de vergelijkingsoperator wordt gebruikt, test de negatieoperator of twee waarden <em>niet</em> gelijk zijn aan elkaar.</td>
+				<td><code><span class="operator">!</span></code> <code><span class="operator">!==</span></code></td>
+				<td>
+					<p>De uitdrukking is waar, maar de vergelijking levert nietWaar op omdat we hem negatief hebben gemaakt.</p>
+
+					<code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="number">3</span>;</code><br>
+					<code> <span class="operator">!</span>(mijnVariabele <span class="operator">===</span> <span class="number">3</span>);</code>
+
+					<p>Hier testen we of "mijnVariable NIET gelijk is aan 3". Dit levert nietWaar op omdat mijnVariabele wel degelijk gelijk is aan 3.</p>
+
+					<code><span class="number"> var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</code><br>
+					<code>myVariable <span class="operator">!==</span> <span class="number">3</span>;</code>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="example">
+		<h3> Oefening: </h3>
+		<p> Zorg ervoor dat wanneer de variabele 'leeftijd' aangemaakt wordt de waarde 12 is. Daarna deel de variabele door 12 en zet de variabele in de HTML.</p>
+
+		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">var</span> leeftijd <span class="operator">=</span><input id="1-2-1" type="text" data-answer="12">;
+leeftijd <span class="operator">=</span> leeftijd <span class="operator">/</span> <input id="1-2-2" type="text" data-answer="6">;
+<span class="keyword">document</span>.<span class="property">findElementMetId</span>(<span class="string">'voorbeeld'</span>).<span class="property">inHTML</span>=<input id="1-2-3" type="text" data-answer="leeftijd">;</code></pre><br/>
+
+		<input class="exercise" id="excercise1-2" type="submit" value="Check de code"/>
+
+		<div class="output-1-2" data-code="var age = 12; age = age / 6; document.getElementById('example').innerHTML=age;" id="example">HIER MOET DE LEEFTIJD KOMEN TE STAAN</div>
+	</div>
+
+	<div class="instructions">
+		<p> Belangrijk om te herinneren: </p>
+		<ul> 
+			<li>Wanneer je een nummer en een streng aan elkaar toevoegt zal Javascript het nummer ook als een streng aanzien<br/>
+			<code style="display: inline-block; width: 170px;"><span class="keyword">var</span> x = <span class="number">16</span> + <span class="string">"Volvo"</span>;</code> wordt gezien als <code style="display: inline-block; width: 170px;"><span class="keyword">var</span> x = <span class="string">"16"</span> + <span class="string">"Volvo"</span>;</code> en zegt dus: '16Volvo'.</li>
+			<li> Je kunt een variabele een waarde geven van een andere variabele door de naam van de variabele te gebruiken. Hier wordt de variabele het getal van x plus 4. <code style="display: inline-block; width: 170px;"><span class="keyword">var</span> mijnVariabele = x + <span class="number">4</span>;</code></li>
+		</ul>
+
+		<h2> Commentaren </h2>
+		<p> U kunt commentaren in uw JavaScript-code plaatsen, deze worden dan genegeerd door de webbrowser. </p>
+
+		<pre style="width: 300px;" ><code style="padding:initial;"><span class="comment">/*
+Alles ertussen is een commentaar.
+*/</span></code></pre><br/>
+		<pre style="width: 300px;"><span class="comment">// Dit is maar een lijn commentaar</span></pre> <br/><br/>
+
+		<?php echo "<a href='/exercise-1?userID=".$userID."&language=".$language."'>Ga naar de opdracht van Module 1</a>"?>
+	</div>
 	<?php
 		}
 	?>

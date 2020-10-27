@@ -28,7 +28,7 @@
 	<title>Learn Javascript in Dutch!</title>
 </head>
 <body id="codemirror">
-	<h1> Module 1 </h1>
+	<h1> Module 1 Exercise</h1>
 
 	<div class="codeeditor">
 
@@ -36,7 +36,7 @@
 			if ($language == "dutch"){
 		?>
 			<h1>Code input</h1>
-			<h2>Variablen</h2>
+			<h2>Variabelen</h2>
 			<p> maak deze variabelen en zet de waardes op wat er tussen haakjes staat (als er niks staat geen waarde aan geven):</p>
 			<ul>
 				<li>opstaan (7)</li>
@@ -44,20 +44,38 @@
 				<li>middagEten (13)</li>
 				<li>avond (18)</li>
 				<li>feest</li>
-				<li>MiddagDutje aan die de waarde heeft van middagEten plus 2</li>
+				<li>middagDutje aan die de waarde heeft van middagEten plus 2</li>
 			</ul>
+
+			<textarea id="codeinput"></textarea>
+
+			<input id="checkcode" type="submit" value="Check Code"/>
+
+			<?php echo "<a id='opdrachtklaar' href='/module-2?userID=".$userID."&language=".$language."'>Ga naar Module 2</a>"?>
 
 		<?php
 			}else if ($language == "english"){ 
 		?>
+			<h1>Code input</h1>
+			<h2>Variables</h2>
+			<p> Declare these variables and put the value on the amount between the (), when there is no value declare the variable empty:</p>
+			<ul>
+				<li>wakeup (7)</li>
+				<li>noon (12)</li>
+				<li>lunchTime (13)</li>
+				<li>evening (18)</li>
+				<li>party</li>
+				<li>napTime aan die de waarde heeft van middagEten plus 2</li>
+			</ul>
 
+			<textarea id="codeinput"></textarea>
+
+			<input id="checkcode" type="submit" value="Check Code"/>
 		<?php
 			}
 		?>
 		
-		<textarea id="codeinput"></textarea>
-
-		<input id="checkcode" type="submit" value="Check Code"/>
+		
 
 		<!-- <h1>Code output</h1>
 		<div id="voorbeeld" ></div> -->

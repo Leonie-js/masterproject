@@ -28,7 +28,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "UPDATE progress SET timestamp = '". $timestamp ."', attempt='". $filename . "', noa = noa+1 WHERE userID = ". $userID ." AND moduleID = ". $moduleID .";";
+$sql = "UPDATE progress SET timestamp = '". $timestamp ."', attempt='". $filename . "', noa = noa+1, finished=1 WHERE userID = ". $userID ." AND moduleID = ". $moduleID .";";
 
 if ($conn->query($sql) === !TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;

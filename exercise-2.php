@@ -49,17 +49,36 @@
 				<li>Zorg ervoor dat als laatste <b>bericht</b> de tekst 'Goede middag' krijgt als als deze vergelijkingen niet waar zijn. </li>
 			</ul>
 
+			<textarea id="codeinput"></textarea>
+
+			<input id="checkcode" type="submit" value="Check Code"/>
+
+			<?php echo "<a id='opdrachtklaar' href='/module-3?userID=".$userID."&language=".$language."'>Ga naar Module 3</a>"?>
+
 		<?php
 			}else if ($language == "english"){ 
 		?>
+			<h1>Code input</h1>
+			<p> Add the following actions to the code.</p>
+			<ul>
+				<li>Add the variable <b>hours</b> with no value.</li>
+				<li>Add the variable <b>message</b> with no value.</li>
+				<li>Make sure the the (new) variable <b>partyMessage</b> will be changed because of the <b>party</b> variable.<br>
+				When <b>party</b> is smaller than 0 the message has to be 'Party over!' otherwise it will be 'Party time!'.</li>
+				<li>Make sure that when <b>hours</b> is the same as <b>party</b> the variable <b>message</b> will become 'Party!'.</li>
+				<li>After this make sure that you check if <b>hours</b> is equal to <b>wakeup</b> (Wake up!), <b>lunchTime</b> (Hungry!) and <b>naptime</b> (Sleep tight!). And change <b>message</b> to the text in the (). </li>
+				<li>Also make sure that the code will check that <b>hours</b> is smaller than <b>noon</b> (Good morning!) and if it is bigger or equal to <b>evening</b> (Good evening!) and add the text in the () to <b>message</b></li>
+				<li> At last make sure that <b>message</b> gets the text 'Good afternoon' when all the comparisons above are false.</li>
+			</ul>
 
+			<textarea id="codeinput"></textarea>
+
+			<input id="checkcode" type="submit" value="Check Code"/>
 		<?php
 			}
 		?>
 
-		<textarea id="codeinput"></textarea>
-
-		<input id="checkcode" type="submit" value="Check Code"/>
+		
 
 		<!-- <h1>Code output</h1>
 		<div id="voorbeeld" ></div> -->

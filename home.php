@@ -32,14 +32,13 @@
 
 			$newdata = json_decode($data);
 
-			echo "<table><tr><th>ModuleID</th><th>Module link</th><th>Number of attempts</th><th>Finished</th></tr>";
+			echo "<table><tr><th>ModuleID</th><th>Module link</th><th>Finished</th></tr>";
 
 		    for ($i = 0; $i < count($newdata); $i++) {
 
 		    	$usingdata = $newdata[$i];
 
                 $moduleID = $usingdata->moduleID;
-                $noa = $usingdata->noa;
                 $finished = $usingdata->finished;
 
                 if ($finished == 0){
@@ -48,7 +47,7 @@
                 	$finishedtext = 'true';
                 }
 
-		        echo "<tr><td>".$moduleID."</td><td><a href='/module-".$moduleID."?userID=".$userID."&language=".$language."'>Module ".$moduleID."</a></td><td>".$noa."</td><td>".$finishedtext ."</td></tr>";
+		        echo "<tr><td>".$moduleID."</td><td><a href='/module-".$moduleID."?userID=".$userID."&language=".$language."'>Module ".$moduleID."</a></td><td>".$finishedtext ."</td></tr>";
 		    }
 		    echo "</table>";
 		?>

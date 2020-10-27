@@ -29,25 +29,22 @@ code, pre{
 	width: min-content;
 }
 .keyword{
-	color: aqua;
+	color: #f92672;
 }
 .string {
-	color: gold;
+	color: #e6db74;
 }
 .number{
-	color: orchid;
-}
-.arguments{
-	color: orange;
+	color: #ae81ff;
 }
 .operator{
-	color: magenta;
+	color: #f92672;
 }
 .comment{
-	color: lightgrey;
+	color: #75715e;
 }
-.function{
-	color: lime;
+.property{
+	color: #a6e22e;
 }
 
 .images{
