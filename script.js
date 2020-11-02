@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			if (username && password){
 				sendlogin();
 			} else {
-				window.alert("please enter login details");
+				window.alert("Please enter login details");
 			}
 		});
 	}
@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function(){
 	var exercises = document.getElementsByClassName('exercise');
 
 	if (exercises){
+
+		var url = new URL(window.location.href);
+		var userLanguage = url.searchParams.get("language");
 
 		for (var i =  0; i < exercises.length; i++) {
 			var exercise = exercises[i];
@@ -64,7 +67,12 @@ document.addEventListener('DOMContentLoaded', function(){
 					if (givenAnswer == correctAnswer){
 						rightanswers++;
 					} else {
-						var errorText = document.createTextNode('this is incorrect');
+						if (userLanguage == 'english'){
+							var errorText = document.createTextNode('this is incorrect');
+						} else {
+							var errorText = document.createTextNode('dit klopt niet');
+						}
+						
 						errorLabel.appendChild(errorText);
 						input.after(errorLabel);
 					}
@@ -74,7 +82,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 				if(rightanswers == childrenInput){
 					var goodLabel = document.createElement('label');
-					goodLabel.appendChild(document.createTextNode('everything is correct'));
+					if (userLanguage == 'english') {
+						goodLabel.appendChild(document.createTextNode('answer is correct'));
+					} else {
+						goodLabel.appendChild(document.createTextNode('antwoord is goed'));
+					}
+					
 					exercise.after(goodLabel);
 					var selectorid = '.output-' + inputid;
 					var exampleoutput = document.querySelector(selectorid);
@@ -104,24 +117,17 @@ document.addEventListener('DOMContentLoaded', function(){
 		var modulename = window.location.pathname;
 		var moduleID = modulename.substr(modulename.length - 1);
 
-		if (userLanguage == "dutch"){
-			var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
-				mode: "javascript",
-				lineNumbers: true,
-				indentWithTabs: true,
-				theme: 'monokai'
-			});
-			editor.save();
-		} else if (userLanguage == "english"){
-			var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
-				mode: "javascript",
-				lineNumbers: true,
-				indentWithTabs: true,
-				theme: 'monokai'
-			});
-			editor.save();
-		}
 		
+		var editor = CodeMirror.fromTextArea(document.getElementById('codeinput'), {
+			mode: "javascript",
+			lineNumbers: true,
+			indentWithTabs: true,
+			// gutters: ["CodeMirror-lint-markers"],
+			// lint:true,
+			theme: 'monokai'
+		});
+		editor.save();
+	
 
 		loadCode();
 
@@ -139,12 +145,14 @@ document.addEventListener('DOMContentLoaded', function(){
 		// })
 
 		document.getElementById('checkcode').onclick = function(){
+			console.log('here3');
 			code = getCode(editor);
 
 			if (userLanguage == "dutch"){
+				console.log('here2');
 				translateCode(code, userID, moduleID, userLanguage);
 			} else if (userLanguage == "english"){
-				checkCode(code);
+				checkCode(code, userID,moduleID, userLanguage);
 			}
 			
 		};
@@ -173,15 +181,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			});
 		}
 
-		function displayCode(code){
-			var script = document.createElement("script");
-			// script.type = "text/javascript";
-			// script.src = userID +'-'+ moduleID +'.js';
-			script.innerHTML = code;
-			$("head").append(script);
-			// $('script').remove();
-			// $('<script>').html(code).appendTo('head');
-		}
+		
 	}
 
 	var comparison = document.getElementById("comparison");
@@ -213,14 +213,36 @@ document.addEventListener('DOMContentLoaded', function(){
 		editor2.save();
 
 		var filename = userID +'-'+ moduleID +'.js';
+		console.log(filename);
 		$.ajax({
 			type: "GET",
 			url: filename,
+			dataType: 'script',
 			success: function(success){
+				var uricode = encodeURIComponent(success);
+
+				var backup = userID +'-'+ moduleID +'-backup.js'
+
+				   $.get(backup)
+				    .done(function() { 
+				        // exists code 
+				    }).fail(function() { 
+				        $.ajax({
+							type: "POST",
+							url: 'codesave.php',
+							data: "attempt=" + uricode + '&userID=' + userID + '&moduleID=' + moduleID + '&finished=0&backup=1',
+							success: function(success2)
+							{
+								console.log('saved');
+								console.log(success2)
+							}
+						});
+				    })
+					
 				if (userLanguage == "dutch"){
 					translateCodeBack(success, editor1);
 				} else {
-					editor.getDoc().setValue(success);
+					editor1.getDoc().setValue(success);
 				}
 			},
 			error: function(error){
@@ -228,12 +250,23 @@ document.addEventListener('DOMContentLoaded', function(){
 			}
 		});
 
-		var filename2 = 'module-'+ moduleID +'.js';
+		
+		if (userLanguage == "dutch"){
+			var filename2 = 'module-'+ moduleID +'.js';
+		} else {
+			var filename2 = 'module-'+ moduleID +'-en.js';
+		}
+		console.log(filename2);
 		$.ajax({
 			type: "GET",
 			url: filename2,
+			dataType: 'script',
 			success: function(success){
-				editor2.getDoc().setValue(success);
+				if (userLanguage == "dutch"){
+					translateCodeBack(success, editor2);
+				} else {
+					editor2.getDoc().setValue(success);
+				}
 			},
 			error: function(error){
 				console.log('error');
@@ -244,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			event.preventDefault();
 
 			var code = getCode(editor2);
-			saveCode(code, userID, moduleID);
+			saveCode(code, userID, moduleID, userLanguage);
 		});
 
 		$('#codetakeover').click(function(event){
@@ -253,10 +286,61 @@ document.addEventListener('DOMContentLoaded', function(){
 			var code = getCode(editor2);
 			editor1.getDoc().setValue(code);
 
-			saveCode(code, userID, moduleID);
+			saveCode(code, userID, moduleID, userLanguage);
 		});
 
 	}
+
+	var stop = document.getElementById("stopform");
+
+	if (stop){
+		$('#submithelp').click(function(event){
+			event.preventDefault();
+
+			var reason = $('select').val();
+			var more = $('textarea').val();
+			var url = new URL(window.location.href);
+			var userID = url.searchParams.get("userID");
+
+			$.ajax({
+				type: "POST",
+				url: 'stop.php',
+				data: "reason=" + reason+ '&userID=' + userID + '&more=' + more,
+				success: function(success)
+				{
+					console.log(success);
+					stop.style.display = 'none';
+					var homeurl = document.getElementById("homeurl");
+					homeurl.style.display = 'block';
+
+				}
+			});
+		});
+	}
+
+	var nav = $('.navlink');
+	if (nav){
+
+		nav.click(function(event){
+			var urllink = $(this).attr('href');
+			var urluro = encodeURIComponent(urllink);
+			var url = new URL(window.location.href);
+			var userID = url.searchParams.get("userID");
+
+			console.log('update');
+
+			$.ajax({
+				type: "POST",
+				url: 'navtimes.php',
+				data: "userID=" + userID + '&urllink=' + urluro,
+				success: function(success)
+				{
+					console.log(success);
+				}
+			});
+		});
+	}
+
 
 }, false);
 
@@ -270,11 +354,11 @@ function translateCodeBack(code, editor){
 			if (result[value] === undefined || result[value] === ''){
 				delete value;
 			} else {
-				var word = result[value].slice(0,-1);
+				//var word = result[value].slice(0,-1);
 				if (code.includes(value)){
 					var wordlength = occurrences(code, value);
 					for (var i = wordlength; i > 0; i--) {
-					 	code = code.replace(value, word);
+					 	code = code.replace(value, result[value]);
 					}
 				} 
 			}		
@@ -314,7 +398,10 @@ function occurrences(string, subString, allowOverlapping) {
     return n;
 }
 
-function translateCode(code, userID, moduleID, language){	
+function translateCode(code, userID, moduleID, language){
+
+	console.log('here');
+	console.log(code);	
 
 	getJStext()
 	.then(function(result){
@@ -326,14 +413,14 @@ function translateCode(code, userID, moduleID, language){
 			if (result[key] === undefined || result[key] === ''){
 				delete result[key];
 			} else {
-				var word = result[key].slice(0,-1);
-				if (code.includes(word)){
-					var wordlength = occurrences(code, word);
+				//var word = result[key].slice(0,-1);
+				if (code.includes(result[key])){
+					var wordlength = occurrences(code, result[key]);
 					for (var i = wordlength; i > 0; i--) {
-					 	code = code.replace(word, key);
+					 	code = code.replace(result[key], key);
 					}
 					checkcode = true;
-				} else if (code.toLowerCase().includes(word.toLowerCase())){
+				} else if (code.toLowerCase().includes(result[key].toLowerCase())){
 					console.log('bijna');
 					checkcode = false;
 					break;
@@ -377,6 +464,10 @@ function checkCode(code, userID, moduleID, language){
 		var errorlength = jshint.errors.length;
 		var nummer;
 
+		if ($('#errors')){
+			$('#errors').remove();
+		}
+
 		if (language == 'dutch'){
 
 			var errorstring = '<div id="errors"><p>Er zijn error(s) gevonden. Kijk of je ze kan oplossen, als dit niet lukt ga door naar de volgende pagina.<ul>';
@@ -405,21 +496,19 @@ function checkCode(code, userID, moduleID, language){
 
 		$(errorstring).insertBefore("#codeinput");
 
-		console.log(errorstring);
-
-		saveCode(code, userID, moduleID);
+		saveCode(code, userID, moduleID, language);
 	} else {
 		console.log('there are no errors');
 
 		if ($('#errors')){
 			$('#errors').remove();
 		}
-		saveCode(code, userID, moduleID);
+		saveCode(code, userID, moduleID, language);
 
 	}
 }
 
-function saveCode(code, userID, moduleID){
+function saveCode(code, userID, moduleID, language){
 	var uricode = encodeURIComponent(code);
 
 	$.ajax({
@@ -429,14 +518,38 @@ function saveCode(code, userID, moduleID){
 		success: function(success)
 		{
 			console.log('saved');
+			console.log(success)
 		}
 	});
+
+	if (language == 'dutch'){
+		alert('Je code is opgeslagen');
+	} else {
+		alert('Your code is saved');
+	}
+
+	var opdrachtklaar = document.getElementById("opdrachtklaar");
+
+	if (opdrachtklaar){
+		opdrachtklaar.style.display = 'inline-block';
+	}
+
 
 	var codeoutput = document.getElementById("codeoutput");
 
 	if (codeoutput){
 		displayCode(code);
 	}			
+}
+
+function displayCode(code){
+	var script = document.createElement("script");
+	// script.type = "text/javascript";
+	// script.src = userID +'-'+ moduleID +'.js';
+	script.innerHTML = code;
+	$("head").append(script);
+	// $('script').remove();
+	// $('<script>').html(code).appendTo('head');
 }
 
 function sendlogin(){
@@ -462,13 +575,25 @@ function sendlogin(){
 					var language = JSON.parse(xmlHttp.responseText)['language'];
 					window.location.href = "/home?userID=" + userID + "&language=" + language;
 				} else {
-					alert("Your account details are not recognized.")
+					alert("Your account details are not recognized. Please contact Leonie!")
 					console.log(xmlHttp.responseText);
 				}
 			} 
 		}
 		xmlHttp.open("post", "login.php"); 
 		xmlHttp.send(formData);
+
+		var urllink = 'login';
+
+		$.ajax({
+			type: "POST",
+			url: 'navtimes.php',
+			data: "userID=" + userID + '&urllink=' + urllink,
+			success: function(success)
+			{
+				console.log(success);
+			}
+		});
 
 	} else {
 		window.alert("please fill in all inputs");

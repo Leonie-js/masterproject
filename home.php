@@ -15,42 +15,108 @@
 </head>
 <body>
 	<?php
-		$userID = $_GET["userID"];
-		$language = $_GET["language"];
+	$userID = $_GET["userID"];
+	$language = $_GET["language"];
 	?> 
-	<h1>home (<?php echo $language; ?>)</h1>
-	<p > UserID 
-		<?php
+	<?php 
+	if ($language == "dutch"){
+		?>
+		<h1>Home (NL)</h1>
+		<p > UserID 
+			<?php
 			echo $userID;
-		?> 
+			?> 
+		is ingelogd. </p> <button id="logoutbutton"><a class='navlink' href="/">Uitloggen</a></button>
+
+		<p> Status is: </p>
+		<?php
+		$_POST["userID"] = $userID;
+		$data = include("getprocess.php");
+
+		$newdata = json_decode($data);
+
+		echo "<table><tr><th>ModuleID</th><th>Module link</th><th>Voltooid</th></tr>";
+
+		for ($i = 0; $i < count($newdata); $i++) {
+
+			$usingdata = $newdata[$i];
+
+			$moduleID = $usingdata->moduleID;
+			$finished = $usingdata->finished;
+
+			if ($finished == 0){
+				$finishedtext = 'nee';
+				if($i != 0){
+					$usingdatalink = $newdata[$i-1];
+					$finishedlink = $usingdatalink->finished;
+					if ($finishedlink == 0){
+						$stylea = 'style="pointer-events: none; cursor: default; color: gray;"';
+					}else{
+						$stylea = '';
+					}
+				} else{
+					$stylea = '';
+				}
+
+			} else {
+				$finishedtext = 'ja';
+				$stylea = '';
+			}
+
+			echo "<tr><td>".$moduleID."</td><td><a class='navlink' ".$stylea." href='/module-".$moduleID.".php?userID=".$userID."&language=".$language."'>Module link</a></td><td>".$finishedtext ."</td></tr>";
+		}
+		echo "</table>";
+	}else {
+		?>
+		<h1>Home (EN)</h1>
+		<p > UserID 
+			<?php
+			echo $userID;
+			?> 
 		is logged in </p>
 
-	<p> Progress is: </p>
+		<button id="logoutbutton"><a class='navlink' href="/">Logout</a></button>
+
+		<p> Progress is: </p>
+
 		<?php
-			$_POST["userID"] = $userID;
-			$data = include("getprocess.php");
+		$_POST["userID"] = $userID;
+		$data = include("getprocess.php");
 
-			$newdata = json_decode($data);
+		$newdata = json_decode($data);
 
-			echo "<table><tr><th>ModuleID</th><th>Module link</th><th>Finished</th></tr>";
+		echo "<table><tr><th>ModuleID</th><th>Module link</th><th>Finished</th></tr>";
 
-		    for ($i = 0; $i < count($newdata); $i++) {
+		for ($i = 0; $i < count($newdata); $i++) {
 
-		    	$usingdata = $newdata[$i];
+			$usingdata = $newdata[$i];
 
-                $moduleID = $usingdata->moduleID;
-                $finished = $usingdata->finished;
+			$moduleID = $usingdata->moduleID;
+			$finished = $usingdata->finished;
 
-                if ($finished == 0){
-                	$finishedtext = 'false';
-                } else {
-                	$finishedtext = 'true';
-                }
+			if ($finished == 0){
+				$finishedtext = 'false';
+				if($i != 0){
+					$usingdatalink = $newdata[$i-1];
+					$finishedlink = $usingdatalink->finished;
+					if ($finishedlink == 0){
+						$stylea = 'style="pointer-events: none; cursor: default; color: gray;"';
+					}else{
+						$stylea = '';
+					}
+				} else{
+					$stylea = '';
+				}
 
-		        echo "<tr><td>".$moduleID."</td><td><a href='/module-".$moduleID."?userID=".$userID."&language=".$language."'>Module ".$moduleID."</a></td><td>".$finishedtext ."</td></tr>";
-		    }
-		    echo "</table>";
-		?>
+			} else {
+				$finishedtext = 'true';
+				$stylea = '';
+			}
+
+			echo "<tr><td>".$moduleID."</td><td><a class='navlink' ".$stylea." href='/module-".$moduleID.".php?userID=".$userID."&language=".$language."'>Module link</a></td><td>".$finishedtext ."</td></tr>";
+		}
+		echo "</table>";
+	};?>
 
 </body>
 </html>

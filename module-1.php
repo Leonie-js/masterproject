@@ -7,10 +7,26 @@
 	<title>Learn Javascript in Dutch!</title>
 </head>
 <body >
-	<h1> Module 1 </h1>
 	<?php 
 		$language = $_GET["language"];
 		$userID = $_GET["userID"];
+	?>
+
+	<header>
+
+	<?php echo "<a class='navlink' href='/home?userID=".$userID."&language=".$language."'>Home</a>"?>
+	
+	
+
+	<?php echo "<a id='helpbutton' class='navlink' href='/help.php?userID=".$userID."&language=".$language."'>Stop</a>"?>
+
+</header>
+
+<footer>
+
+<h1> Module 1 (<?php echo $userID; ?>) </h1>
+	
+	<?php
 
 		if ($language == 'english'){
 
@@ -58,22 +74,22 @@
 			<tr>
 				<th>String</th>
 				<td>This is a sequence of text known as a string. To signify that the value is a string, enclose it in single quote marks.</td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="string">'text'</span>;</code></td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="string">'text'</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Number</th>
 				<td>This is a number. Numbers don't have quotes around them.</td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">10</span>;</code></td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">10</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Boolean</th>
 				<td>This is a True/False value. The words true and false are special keywords that don't need quote marks.</td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator"><span class="operator">=</span></span> <span class="operator">true</span>;</code></td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator"><span class="operator">=</span></span> <span class="operator">true</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Array</th>
 				<td>This is a structure that allows you to store multiple values in a single reference.</td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> [<span class="number">1</span>,<span class="string">'Bob'</span>,<span class="string">'Streve'</span>,<span class="number">10</span>];</code><br>Refer to each member of the array like this:<br><code>myVariable[0]</code> will say 1,<br/> <code>myVariable[1]</code> will say Bob, etc.</td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator">=</span> [<span class="number">1</span>,<span class="string">'Bob'</span>,<span class="string">'Streve'</span>,<span class="number">10</span>];</pre><br>Refer to each member of the array like this:<br><code>myVariable[0]</code> will say 1,<br/> <code>myVariable[1]</code> will say Bob, etc.</td>
 			</tr>
 		</table>
 
@@ -90,25 +106,25 @@
 				<th>Addition</th>
 				<td>Add two numbers together or combine two strings.</td>
 				<td><code><span class="operator">+</span></code></td>
-				<td><code><span class="number">6</span> <span class="operator">+</span> <span class="number">9</span>;</code> will say 15.<br><span class="string">'Hello '</span> <span class="operator">+</span> <span class="string">'world!'</span>;</code>wil say 'Hello world!'.</td>
+				<td><pre><span class="number">6</span> <span class="operator">+</span> <span class="number">9</span>;</pre><br> will say 15.<br><pre><span class="string">'Hello '</span> <span class="operator">+</span> <span class="string">'world!'</span>;</pre><br>will say 'Hello world!'.</td>
 			</tr>
 			<tr>
 				<th>Subtraction, Multiplication, Division</th>
 				<td>These do what you'd expect them to do in basic math. Only possible with numbers.</td>
 				<td><code><span class="operator">-</span></code> <code><span class="operator">*</span></code> <code><span class="operator">/</span></code></td>
-				<td><code><span class="number">9</span> <span class="operator">-</span> <span class="number">3</span>;</code> Substract<br><code><span class="number">8</span> <span class="operator">*</span> <span class="number">2</span>;</code> multiply in JS is an asterisk<br><code><span class="number">9</span> <span class="operator">/</span> <span class="number">3</span>;</code> Divide</td>
+				<td><pre><span class="number">9</span> <span class="operator">-</span> <span class="number">3</span>;</pre> <br>Substract<br><pre><span class="number">8</span> <span class="operator">*</span> <span class="number">2</span>;</pre><br> multiply in JS is an asterisk<br><pre><span class="number">9</span> <span class="operator">/</span> <span class="number">3</span>;</pre> <br>Divide</td>
 			</tr>
 			<tr>
 				<th>Assignment</th>
 				<td>As you've seen already: this assigns a value to a variable.</td>
 				<td><code><span class="operator">=</span></code></td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="string">'Bob'</span>;</code></td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="string">'Bob'</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Equality</th>
 				<td>This performs a test to see if two values are equal. It returns a true/false (Boolean) result.</td>
 				<td><code><span class="operator">===</span></code></td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</code><br><code>myVariable <span class="operator">===</span> <span class="number">4</span>;</code>will say false.</td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</pre><br><pre>myVariable <span class="operator">===</span> <span class="number">4</span>;</pre><br>will say false.</td>
 			</tr>
 			<tr>
 				<th>Not, Does-not-equal</th>
@@ -117,13 +133,13 @@
 				<td>
 					<p>For "Not", the basic expression is true, but the comparison returns false because we negate it:</p>
 
-					<code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</code><br>
-					<code> <span class="operator">!</span>(myVariable <span class="operator">===</span> <span class="number">3</span>);</code>
+					<pre><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</pre><br>
+					<pre> <span class="operator">!</span>(myVariable <span class="operator">===</span> <span class="number">3</span>);</pre>
 
 					<p>"Does-not-equal" gives basically the same result with different syntax. Here we are testing "is myVariable NOT equal to 3". This returns false because myVariable IS equal to 3:</p>
 
-					<code><span class="number"> var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</code><br>
-					<code>myVariable <span class="operator">!==</span> <span class="number">3</span>;</code>
+					<pre><span class="number"> var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</pre><br>
+					<pre>myVariable <span class="operator">!==</span> <span class="number">3</span>;</pre>
 				</td>
 			</tr>
 		</table>
@@ -133,7 +149,7 @@
 		<h3> Exercise: </h3>
 		<p> Declare the variable 'age' with 12, after that divide it by 6 and check if it equals 2.</p>
 
-		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">var</span> age <span class="operator">=</span><input id="1-2-1" type="text" data-answer="12">;
+		<pre ><code style="padding:initial;"><span class="keyword">var</span> age <span class="operator">=</span><input id="1-2-1" type="text" data-answer="12">;
 age <span class="operator">=</span> age <span class="operator">/</span> <input id="1-2-2" type="text" data-answer="6">;
 <span class="keyword">document</span>.<span class="property">getElementById</span>(<span class="string">'example'</span>).<span class="property">innerHTML</span>=<input id="1-2-3" type="text" data-answer="age">;</code></pre><br/>
 
@@ -157,7 +173,7 @@ Everything in between is a comment.
 */</span></code></pre><br/>
 		<pre style="width: 300px;"><span class="comment">// This is a one line comment.</span></pre> <br/><br/>
 
-		<?php echo "<a href='/exercise-1?userID=".$userID."&language=".$language."'>Go to module 1 exercise</a>"?>
+		<?php echo "<a class='navlink' target='_blank' href='/exercise-1?userID=".$userID."&language=".$language."'>Go to module 1 exercise</a>"?>
 	</div>
 
 	
@@ -179,7 +195,7 @@ Everything in between is a comment.
 			<li>Alle verklaringen in JavaScript moeten op een puntkomma eindigen, om aan te duiden waar de verklaring eindigt.</li>
 			<li>Er mogen geen variabeles zijn met dezelfde naam</li>
 			<li>'camelCase' wordt gebruikt bij het bedenken van namen voor variabelen <br/>
-			Dit betekend dat het eerste woord geen hoofdletter heeft en elk word hierna wel</li>
+			Dit betekend dat het eerste woord geen hoofdletter heeft en elk woord hierna wel</li>
 			<li>Nadat je een variabele hebt gedeclareerd hoef je geen 'var' meer ervoor te gebruiken. Dit doe je 1 keer om aan te geven in de code dat je een nieuwe variabele maakt. Je kunt dus niet eerst een variabele een waarde geven en hierna pas de variabele declareren.</li>
 		</ul>
 	</div>
@@ -205,22 +221,22 @@ Everything in between is a comment.
 			<tr>
 				<th>Streng</th>
 				<td>Een streng is wat als tekst geldt. Om aan te duiden dat de variabele een streng is, moet u die tussen aanhalingstekens zetten.</td>
-				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="string">'tekst'</span>;</code></td>
+				<td><pre><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="string">'tekst'</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Nummer</th>
 				<td>Een nummer. Nummers worden niet omringd door aanhalingstekens .</td>
-				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="number">10</span>;</code></td>
+				<td><pre><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="number">10</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Boolean</th>
 				<td>Een waarde die waar of niet waar is. De woorden waar en nietWaar zijn speciale sleutelwoorden in JS en hebben geen aanhalingstekens nodig.</td>
-				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator"><span class="operator">=</span></span> <span class="operator">waar</span>;</code></td>
+				<td><pre><span class="keyword">var</span> mijnVariabele <span class="operator"><span class="operator">=</span></span> <span class="operator">waar</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Reeks</th>
-				<td>Een reeks die u toestaat om meerdere waarden in in één enkele referentie op te slaan (een lijst).</td>
-				<td><code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> [<span class="number">1</span>,<span class="string">'Bob'</span>,<span class="string">'Steven'</span>,<span class="number">10</span>];</code><br>Verwijs naar elk lid van de array op deze manier:<br><code>myVariable[0]</code> zegt 1,<br/> <code>myVariable[1]</code> zegt Bob, etc.</td>
+				<td>Een reeks die u toestaat om meerdere waarden in één enkele referentie op te slaan (een lijst).</td>
+				<td><pre><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> [<span class="number">1</span>,<span class="string">'Bob'</span>,<span class="string">'Steven'</span>,<span class="number">10</span>];</pre><br>Verwijs naar elk lid van de reeks op deze manier:<br><code>myVariable[0]</code> zegt 1,<br/> <code>myVariable[1]</code> zegt Bob, etc.</td>
 			</tr>
 		</table>
 
@@ -237,25 +253,25 @@ Everything in between is a comment.
 				<th>Optellen, Aaneenschakeling</th>
 				<td>Gebruiken we om twee nummers op te tellen of om twee strengen (tekst dus) aan elkaar te plakken.</td>
 				<td><code><span class="operator">+</span></code></td>
-				<td><code><span class="number">6</span> <span class="operator">+</span> <span class="number">9</span>;</code> zegt 15.<br><code><span class="string">'Hallo '</span> <span class="operator">+</span> <span class="string">'wereld!'</span>;</code> zegt 'Hallo wereld!'.</td>
+				<td><pre><span class="number">6</span> <span class="operator">+</span> <span class="number">9</span>;</pre><br>zegt 15.<br><pre><span class="string">'Hallo '</span> <span class="operator">+</span> <span class="string">'wereld!'</span>;</pre><br> zegt 'Hallo wereld!'.</td>
 			</tr>
 			<tr>
 				<th>Aftrekken, Vermenigvuldigen, Delen</th>
 				<td>Met deze variabelen kunt u rekenen. Dit kan alleen met nummers.</td>
 				<td><code><span class="operator">-</span></code> <code><span class="operator">*</span></code> <code><span class="operator">/</span></code></td>
-				<td><code><span class="number">9</span> <span class="operator">-</span> <span class="number">3</span>;</code> Aftrekken<br><code><span class="number">8</span> <span class="operator">*</span> <span class="number">2</span>;</code> Vermenigvuldigen is in JS een asterisk<br><code><span class="number">9</span> <span class="operator">/</span> <span class="number">3</span>;</code> Delen</td>
+				<td><pre><span class="number">9</span> <span class="operator">-</span> <span class="number">3</span>;</pre><br> Aftrekken<br><pre><span class="number">8</span> <span class="operator">*</span> <span class="number">2</span>;</pre> <br>Vermenigvuldigen is in JS een asterisk<br><pre><span class="number">9</span> <span class="operator">/</span> <span class="number">3</span>;</pre><br> Delen</td>
 			</tr>
 			<tr>
 				<th>Toewijzingsoperator</th>
 				<td>Dit hebt u al gezien: het wijst een waarde toe aan een variabele.</td>
 				<td><code><span class="operator">=</span></code></td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="string">'Bob'</span>;</code></td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="string">'Bob'</span>;</pre></td>
 			</tr>
 			<tr>
 				<th>Vergelijken</th>
 				<td>Doet een test om te zien of twee waarden gelijk zijn aan elkaar. Levert een waar/niet waar (Boolean) resultaat op. </td>
 				<td><code><span class="operator">===</span></code></td>
-				<td><code><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</code><br><code>myVariable <span class="operator">===</span> <span class="number">4</span>;</code>zegt dus nietWaar.</td>
+				<td><pre><span class="keyword">var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</pre><br><pre>myVariable <span class="operator">===</span> <span class="number">4</span>;</pre><br>zegt dus nietWaar.</td>
 			</tr>
 			<tr>
 				<th>Negatie, Niet gelijk aan</th>
@@ -264,13 +280,13 @@ Everything in between is a comment.
 				<td>
 					<p>De uitdrukking is waar, maar de vergelijking levert nietWaar op omdat we hem negatief hebben gemaakt.</p>
 
-					<code><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="number">3</span>;</code><br>
-					<code> <span class="operator">!</span>(mijnVariabele <span class="operator">===</span> <span class="number">3</span>);</code>
+					<pre><span class="keyword">var</span> mijnVariabele <span class="operator">=</span> <span class="number">3</span>;</pre><br>
+					<pre> <span class="operator">!</span>(mijnVariabele <span class="operator">===</span> <span class="number">3</span>);</pre>
 
 					<p>Hier testen we of "mijnVariable NIET gelijk is aan 3". Dit levert nietWaar op omdat mijnVariabele wel degelijk gelijk is aan 3.</p>
 
-					<code><span class="number"> var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</code><br>
-					<code>myVariable <span class="operator">!==</span> <span class="number">3</span>;</code>
+					<pre><span class="number"> var</span> myVariable <span class="operator">=</span> <span class="number">3</span>;</pre><br>
+					<pre>myVariable <span class="operator">!==</span> <span class="number">3</span>;</pre>
 				</td>
 			</tr>
 		</table>
@@ -278,9 +294,9 @@ Everything in between is a comment.
 
 	<div class="example">
 		<h3> Oefening: </h3>
-		<p> Zorg ervoor dat wanneer de variabele 'leeftijd' aangemaakt wordt de waarde 12 is. Daarna deel de variabele door 12 en zet de variabele in de HTML.</p>
+		<p> Zorg ervoor dat wanneer de variabele 'leeftijd' aangemaakt wordt de waarde 12 is. Daarna deel de variabele door 6 en zet de variabele in de HTML.</p>
 
-		<pre style="width: 500px;" ><code style="padding:initial;"><span class="keyword">var</span> leeftijd <span class="operator">=</span><input id="1-2-1" type="text" data-answer="12">;
+		<pre><code style="padding:initial;"><span class="keyword">var</span> leeftijd <span class="operator">=</span><input id="1-2-1" type="text" data-answer="12">;
 leeftijd <span class="operator">=</span> leeftijd <span class="operator">/</span> <input id="1-2-2" type="text" data-answer="6">;
 <span class="keyword">document</span>.<span class="property">findElementMetId</span>(<span class="string">'voorbeeld'</span>).<span class="property">inHTML</span>=<input id="1-2-3" type="text" data-answer="leeftijd">;</code></pre><br/>
 
@@ -294,7 +310,7 @@ leeftijd <span class="operator">=</span> leeftijd <span class="operator">/</span
 		<ul> 
 			<li>Wanneer je een nummer en een streng aan elkaar toevoegt zal Javascript het nummer ook als een streng aanzien<br/>
 			<code style="display: inline-block; width: 170px;"><span class="keyword">var</span> x = <span class="number">16</span> + <span class="string">"Volvo"</span>;</code> wordt gezien als <code style="display: inline-block; width: 170px;"><span class="keyword">var</span> x = <span class="string">"16"</span> + <span class="string">"Volvo"</span>;</code> en zegt dus: '16Volvo'.</li>
-			<li> Je kunt een variabele een waarde geven van een andere variabele door de naam van de variabele te gebruiken. Hier wordt de variabele het getal van x plus 4. <code style="display: inline-block; width: 170px;"><span class="keyword">var</span> mijnVariabele = x + <span class="number">4</span>;</code></li>
+			<li> Je kunt een variabele een waarde geven van een andere variabele door de naam van de variabele te gebruiken. Hier wordt de variabele het getal van x plus 4. <pre><span class="keyword">var</span> mijnVariabele = x + <span class="number">4</span>;</pre></li>
 		</ul>
 
 		<h2> Commentaren </h2>
@@ -305,11 +321,12 @@ Alles ertussen is een commentaar.
 */</span></code></pre><br/>
 		<pre style="width: 300px;"><span class="comment">// Dit is maar een lijn commentaar</span></pre> <br/><br/>
 
-		<?php echo "<a href='/exercise-1?userID=".$userID."&language=".$language."'>Ga naar de opdracht van Module 1</a>"?>
+		<?php echo "<a class='navlink' target='_blank' href='/exercise-1?userID=".$userID."&language=".$language."'>Ga naar de opdracht van Module 1</a>"?>
 	</div>
 	<?php
 		}
 	?>
+</footer>
 
 </body>
 </html>

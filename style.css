@@ -4,6 +4,43 @@
 }
 */
 body{
+	margin: 0;
+}
+footer{
+	width: 90%;
+	margin: 0 auto;
+	padding-bottom: 50px;
+}
+
+header{
+	background-color: lightgray;
+	padding: 20px;
+}
+
+a{
+	border: 2px solid #000;
+	background-color: #fff;
+	padding: 7px;
+	color: #000;
+	margin: 10px;
+}
+
+#nothing{
+	border: none;
+	padding: initial;
+	margin: initial;
+}
+
+button{
+	border: none;
+}
+
+#helpbutton{
+	position: absolute;
+	right: 0;
+	top: 0;
+	color: #fff;
+	background-color: red;
 }
 
 .login{

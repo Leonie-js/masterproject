@@ -8,11 +8,16 @@ $attempt = $_POST['attempt'];
 $finished = $_POST['finished'];
 $filename = $userID .'-'.$moduleID .'.js';
 
+
+if (isset($_POST['backup'])){
+	$backup = $_POST['backup'];
+	$filename = $userID .'-'.$moduleID .'-backup.js';
+}
+
 if (file_exists($filename)){
 	unlink($filename);
 }
 $file = fopen($filename, 'w');
-var_dump($attempt);
 fwrite($file, $attempt);
 fclose($file);
 

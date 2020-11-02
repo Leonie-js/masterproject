@@ -30,7 +30,7 @@ $status = 1;
 					<p>UserID</p>
 					<input class="logininput" type="int" name="userID">
 					<p>Password</p>
-					<input class="logininput" type="text" name="password"><br>
+					<input class="logininput" type="password" name="password"><br>
 					<input id="submitlogin" type="submit" value="Login">
 				</form>		
 			</div>

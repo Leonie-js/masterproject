@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM progress";
+$sql = "SELECT * FROM progress WHERE userID = ". $userID ." ORDER BY moduleID";
 
 $result = $conn->query($sql);
 

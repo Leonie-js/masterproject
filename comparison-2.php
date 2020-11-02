@@ -23,7 +23,6 @@
 	<?php
 		}
 	?>
-	<script src="https://codemirror.net/mode/javascript/javascript.js"></script>
 	<script src="https://codemirror.net/addon/lint/lint.js"></script>
 	<script src="https://codemirror.net/addon/lint/javascript-lint.js"></script>
 	<script src="script.js"></script>
@@ -36,8 +35,8 @@
 	
 
 	<?php echo "<a id='helpbutton' class='navlink' href='/help.php?userID=".$userID."&language=".$language."'>Stop</a>"?>
-</header><footer>
-<h1> Module 1 (<?php echo $userID; ?>) </h1>
+</header> <footer>
+<h1> Module 2 (<?php echo $userID; ?>) </h1>
 		<?php 
 			if ($language == "dutch"){
 		?>
@@ -50,7 +49,7 @@
 			
 			<textarea id="codeinput1"></textarea>
 
-			<?php echo "<a id='opdrachtklaar' class='navlink' href='/module-2.php?userID=".$userID."&language=".$language."'>Ga verder met Module 2</a>"?>
+			<?php echo "<a id='opdrachtklaar' class='navlink' href='/module-3.php?userID=".$userID."&language=".$language."'>Ga verder met Module 3</a>"?>
 
 			<input id="codechange" type="submit" value='Code aanpassen'/>
 
@@ -73,7 +72,7 @@
 			
 			<textarea id="codeinput1"></textarea>
 
-			<?php echo "<a id='opdrachtklaar' class='navlink' href='/module-2.php?userID=".$userID."&language=".$language."'>Start with Module 2</a>"?>
+			<?php echo "<a id='opdrachtklaar' class='navlink' href='/module-3?userID=".$userID."&language=".$language."'>Start with Module 3</a>"?>
 
 			<input id="codechange" type="submit" value='Change code'/>
 
