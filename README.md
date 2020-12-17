@@ -2,10 +2,10 @@ To do:
 - ~~add dutch syntax names~~
 - ~~translate previous js back~~
 - ~~add data-answer to all examples~~
-- add data about time spend on application
+- ~~add data about time spend on application~~
 - ~~check code of assignments are valid js~~
 - ~~add dutch pages~~
 - ~~clear error messages~~
-- translate jshint errors (in progress)
-- add showable examples to code
-- add help button 
+- ~~translate jshint errors~~ 
+- ~~add showable examples to code~~
+- ~~add help button~~ 
